@@ -1,0 +1,14 @@
+$white: #fff;
+$gray: #ccc;
+$black: #000;
+$blue: #138cf5;
+$dark-blue: #0d7ddf;
+$red: #f02849;
+
+$breakpoint-desktop: 552px;
+
+@mixin media-desktop {
+  @media (min-width: #{$breakpoint-desktop}) {
+    @content;
+  }
+}

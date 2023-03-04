@@ -1,0 +1,20 @@
+@import "../../styles/mixins.scss";
+
+.root {
+  position: sticky;
+  height: auto;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: $blue;
+  padding: 16px 32px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+
+  .title {
+    color: $white;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 32px;
+  }
+}

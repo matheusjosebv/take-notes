@@ -1,0 +1,76 @@
+@import "../../styles/mixins.scss";
+
+.root {
+  background-color: $white;
+  transform-origin: 0 0;
+  float: left;
+  border-radius: 7px;
+  padding: 20px;
+  width: 100%;
+  margin: 10px 0;
+  transition: box-shadow 0.2s;
+
+  @include media-desktop {
+    border-radius: 7px;
+    padding: 10px;
+    width: 240px;
+    margin: 10px;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 5px #a6a6a6;
+
+    .button {
+      .delete,
+      .edit {
+        opacity: 1;
+      }
+    }
+  }
+
+  .title {
+    font-size: 1em;
+    margin-bottom: 7px;
+  }
+
+  .content {
+    font-size: 0.85em;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .button {
+    position: relative;
+    float: right;
+    color: #138cf5;
+    border: none;
+    background: none;
+    background-color: none;
+
+    margin: 20px 0 0 12px;
+    outline: none;
+    cursor: pointer;
+
+    @include media-desktop {
+      margin: 25px 0 0 8px;
+      height: 20px;
+    }
+
+    .delete,
+    .edit {
+      transition: 0.2s;
+      opacity: 0;
+    }
+    .delete {
+      &:hover {
+        color: #f02849;
+      }
+    }
+    .edit {
+      &:hover {
+        color: #0d7ddf;
+      }
+    }
+  }
+}
