@@ -4,11 +4,6 @@
   position: relative;
   font-size: 13px;
 
-  .charactersRemaining {
-    color: $red;
-    display: flex;
-  }
-
   .warning {
     display: flex;
     color: $red;
@@ -46,6 +41,7 @@
       font-family: inherit;
       resize: none;
     }
+
     .addButton {
       position: absolute;
       right: 18px;

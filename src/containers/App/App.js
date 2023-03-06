@@ -1,33 +1,37 @@
 /* eslint-disable no-restricted-globals */
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import css from "./App.module.scss";
-import { TbClearAll } from "react-icons/tb";
+import { MdDeleteSweep } from "react-icons/md";
 import Header from "../../containers/Header/Header";
 import CreateArea from "../../components/CreateArea/CreateArea";
 import Note from "../../components/Note/Note";
 
 export default function App() {
-  const [notes, setNotes] = useLocalStorage("notes", []);
+  const [storageNotes, setStorageNotes] = useLocalStorage("notes", []);
+  const [notes, setNotes] = useState(storageNotes);
 
-  const addNote = (inputNote) => {
-    setNotes((prevNotes) => {
-      return [...prevNotes, inputNote];
-    });
-  };
+  const addNote = useCallback(
+    (inputNote) => {
+      const newNotes = [...notes, inputNote];
+      setNotes(
+        newNotes.map((n) => ({ ...n, animate: n.key === inputNote.key }))
+      );
+    },
+    [notes]
+  );
 
   const deleteNote = useCallback(
     (key) => {
-      setNotes((prevNote) => {
-        return prevNote.filter((note) => {
-          return note.key !== key;
-        });
-      });
+      const newNotes = notes.filter((n) => n.key !== key);
+      setNotes(newNotes);
     },
-    [setNotes]
+    [notes]
   );
 
-  // const editNote = useCallback((key) => {}, []);
+  useEffect(() => {
+    setStorageNotes(notes.map((n) => ({ ...n, animate: false })));
+  }, [notes, setStorageNotes]);
 
   return (
     <main className={css.root}>
@@ -39,17 +43,20 @@ export default function App() {
           <span className={css.emptyNotes}>You don't have any notes.</span>
         )}
 
-        {notes.map((item) => (
-          <Note
-            key={item.key}
-            animate={item.animate}
-            id={item.key}
-            title={item.title}
-            content={item.content}
-            onDelete={deleteNote}
-            // onEdit={editNote}
-          />
-        ))}
+        <div className={css.container}>
+          <div className={css.notes}>
+            {notes.map((item) => (
+              <Note
+                id={item.key}
+                key={item.key}
+                title={item.title}
+                content={item.content}
+                animate={item.animate}
+                onDelete={deleteNote}
+              />
+            ))}
+          </div>
+        </div>
 
         {notes.length > 0 && (
           <button
@@ -60,7 +67,7 @@ export default function App() {
               }
             }}
           >
-            <TbClearAll className={css.icon} />
+            <MdDeleteSweep className={css.icon} />
           </button>
         )}
       </div>

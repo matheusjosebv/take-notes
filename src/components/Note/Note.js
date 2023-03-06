@@ -2,34 +2,19 @@ import React, { useRef, useEffect, useCallback } from "react";
 import css from "./Note.module.scss";
 import { gsap } from "gsap";
 import { FaTrashAlt } from "react-icons/fa";
-import { BsPenFill } from "react-icons/bs";
 
-export default function Note({
-  title,
-  content,
-  onDelete,
-  onEdit,
-  id,
-  animate,
-}) {
+export default function Note({ title, content, onDelete, id, animate }) {
   const boxRef = useRef();
 
   const handleDelete = useCallback(() => {
     onDelete(id);
   }, [id, onDelete]);
 
-  const handleEdit = useCallback(() => {
-    onEdit(id);
-  }, [id, onEdit]);
-
   useEffect(() => {
     const box = boxRef.current;
     let tl;
-    if (animate) {
-      tl = gsap
-        .timeline()
-        .from(box, { ease: "expo", scaleY: 0, duration: 0.66 });
-    }
+    tl = gsap.timeline().set(box, { opacity: 1 });
+    if (animate) tl.from(box, { ease: "expo", scaleY: 0, duration: 0.66 });
 
     return () => {
       if (tl) tl.kill();
@@ -43,9 +28,6 @@ export default function Note({
 
       <button className={css.button} onClick={handleDelete}>
         <FaTrashAlt className={css.delete} />
-      </button>
-      <button className={css.button} onClick={handleEdit}>
-        <BsPenFill className={css.edit} />
       </button>
     </div>
   );

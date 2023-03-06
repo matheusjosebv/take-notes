@@ -5,6 +5,7 @@
   min-height: 100vh;
 
   .wrapper {
+    position: relative;
     padding: 0 16px;
 
     .emptyNotes {
@@ -12,6 +13,12 @@
       margin: 100px 0 0 0;
       color: $gray;
       justify-content: center;
+    }
+
+    .notes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .reset {

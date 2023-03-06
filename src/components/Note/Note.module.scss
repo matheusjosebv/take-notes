@@ -1,14 +1,17 @@
 @import "../../styles/mixins.scss";
 
 .root {
+  // display: inline-block;
   background-color: $white;
   transform-origin: 0 0;
   float: left;
   border-radius: 7px;
   padding: 20px;
   width: 100%;
+  // min-width: 240px;
   margin: 10px 0;
   transition: box-shadow 0.2s;
+  opacity: 0;
 
   @include media-desktop {
     border-radius: 7px;
@@ -57,19 +60,13 @@
       height: 20px;
     }
 
-    .delete,
-    .edit {
+    .delete {
       transition: 0.2s;
       opacity: 0;
     }
     .delete {
       &:hover {
         color: #f02849;
-      }
-    }
-    .edit {
-      &:hover {
-        color: #0d7ddf;
       }
     }
   }

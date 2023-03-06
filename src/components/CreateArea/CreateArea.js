@@ -1,42 +1,35 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import css from "./CreateArea.module.scss";
 import { v4 as uuid } from "uuid";
 import { IoIosAdd, IoIosWarning } from "react-icons/io";
+import classNames from "classnames";
 
-const CreateArea = ({ onAdd }) => {
-  const [inputNote, setInput] = useState({
-    title: "",
-    content: "",
-    key: "",
-    animate: true,
-  });
+const CreateArea = ({ onAdd, className }) => {
+  const titleRef = useRef();
+  const contentRef = useRef();
+  const formRef = useRef();
   const [warning, setWarning] = useState(false);
-  const characterLimit = 200;
 
-  const handleAddButton = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const inputNote = {
+      key: uuid(),
+      title: titleRef.current.value,
+      content: contentRef.current.value,
+    };
+
     if (inputNote.title || inputNote.content) {
       onAdd(inputNote);
-      setInput({ title: "", content: "", key: "", animate: true });
+      formRef.current.reset();
       setWarning(false);
-    } else if (!inputNote.title && !inputNote.content) {
+    } else {
       setWarning(true);
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (characterLimit - value.length >= 0) {
-      setInput((prevNote) => ({
-        ...prevNote,
-        [name]: value,
-        key: uuid(),
-      }));
-    }
-    setWarning(false);
-  };
-
   return (
-    <main className={css.root}>
+    <main className={classNames(css.root, className)}>
       <div>
         {warning && (
           <p className={css.warning}>
@@ -45,29 +38,22 @@ const CreateArea = ({ onAdd }) => {
           </p>
         )}
       </div>
-      {characterLimit - inputNote.content.length <= 25 && (
-        <p className={css.charactersRemaining}>
-          You have only {characterLimit - inputNote.content.length} characters
-          remaining.
-        </p>
-      )}
-      <form className={css.form} onSubmit={(e) => e.preventDefault()}>
+
+      <form ref={formRef} className={css.form} onSubmit={handleSubmit}>
         <input
+          ref={titleRef}
           className={css.input}
-          value={inputNote.title}
-          onChange={handleChange}
           name="title"
           placeholder="Title"
         />
         <textarea
+          ref={contentRef}
           className={css.textarea}
-          value={inputNote.content}
-          onChange={handleChange}
           name="content"
-          placeholder="Description"
+          placeholder="Take a note..."
           rows="3"
         />
-        <button className={css.addButton} onClick={handleAddButton}>
+        <button className={css.addButton} type="submit">
           <IoIosAdd className={css.addIcon} size={32} />
         </button>
       </form>
