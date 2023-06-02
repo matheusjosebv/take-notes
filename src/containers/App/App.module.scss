@@ -2,54 +2,65 @@
 
 .root {
   position: relative;
+
   min-height: 100vh;
+  transition: background 0.2s;
 
   .wrapper {
     position: relative;
+
     padding: 0 16px;
 
     .emptyNotes {
       display: flex;
-      margin: 100px 0 0 0;
-      color: $gray;
       justify-content: center;
+
+      color: $gray;
     }
 
     .notes {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
+
+      padding: 0 0 150px 0;
     }
 
     .reset {
+      z-index: 9;
       position: fixed;
+
       right: 15px;
-      bottom: 15px;
       width: 40px;
+      bottom: 15px;
       height: 40px;
-      border-radius: 50%;
       border: none;
-      background-color: $blue;
+      border-radius: 50%;
+
       color: $white;
+      background: $blue;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
+
       outline: none;
+      cursor: pointer;
       transition: all ease 0.2s;
 
       @include media-desktop {
         right: 20px;
-        bottom: 20px;
         width: 50px;
+        bottom: 20px;
         height: 50px;
+
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
       }
 
       .icon {
         display: flex;
-        margin-left: 50%;
-        transform: translateX(-50%);
+
         width: 20px;
         height: 20px;
+        margin-left: 50%;
+        transform: translateX(-50%);
 
         @include media-desktop {
           width: 25px;
@@ -58,7 +69,22 @@
       }
 
       &:hover {
-        background-color: $red;
+        background: $red;
+      }
+    }
+  }
+}
+
+.darkMode {
+  background: $dark-background;
+
+  .wrapper {
+    .reset {
+      background: $dark-text;
+      color: $dark-background;
+
+      &:hover {
+        color: $dark-text;
       }
     }
   }

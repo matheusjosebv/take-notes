@@ -1,73 +1,170 @@
 @import "../../styles/mixins.scss";
 
 .root {
-  // display: inline-block;
-  background-color: $white;
+  position: relative;
+  background: $white;
   transform-origin: 0 0;
   float: left;
   border-radius: 7px;
   padding: 20px;
   width: 100%;
-  // min-width: 240px;
   margin: 10px 0;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, background 0.2s, border 0.2s;
   opacity: 0;
+  box-shadow: 0 2px 5px #a6a6a6;
+  border: 1px solid $white;
 
   @include media-desktop {
     border-radius: 7px;
-    padding: 10px;
+    padding: 15px;
     width: 240px;
     margin: 10px;
+    box-shadow: none;
   }
 
-  &:hover {
-    box-shadow: 0 2px 5px #a6a6a6;
+  .icon {
+    opacity: 1;
+    color: #138cf5;
+    transition: opacity 0.2s, color 0.2s;
 
-    .button {
-      .delete,
-      .edit {
-        opacity: 1;
+    &:hover {
+      color: #0874d2;
+    }
+
+    &.delete {
+      &:hover {
+        color: red;
       }
     }
-  }
 
-  .title {
-    font-size: 1em;
-    margin-bottom: 7px;
-  }
-
-  .content {
-    font-size: 0.85em;
-    margin-bottom: 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  .button {
-    position: relative;
-    float: right;
-    color: #138cf5;
-    border: none;
-    background: none;
-    background-color: none;
-
-    margin: 20px 0 0 12px;
-    outline: none;
-    cursor: pointer;
-
-    @include media-desktop {
-      margin: 25px 0 0 8px;
-      height: 20px;
+    &.pinned {
+      opacity: 1;
     }
+  }
 
-    .delete {
-      transition: 0.2s;
+  @include media-desktop {
+    .icon {
       opacity: 0;
     }
-    .delete {
-      &:hover {
-        color: #f02849;
+
+    .bottom {
+      .date,
+      .edited {
+        opacity: 0;
       }
+    }
+
+    &:hover {
+      box-shadow: 0 2px 5px #a6a6a6;
+
+      .icon {
+        opacity: 1;
+      }
+
+      .bottom {
+        .date,
+        .edited {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+
+    .content {
+      width: 100%;
+      margin: 0 0 40px;
+
+      .title {
+        font-size: 1em;
+        margin-bottom: 15px;
+      }
+
+      .text {
+        font-size: 0.85em;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    }
+
+    .sideBtns {
+      display: flex;
+      margin-left: auto;
+      align-items: flex-start;
+      min-height: 70px;
+      gap: 10px;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+
+    left: 0;
+    width: 100%;
+    bottom: 20px;
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+
+    @include media-desktop {
+      bottom: 15px;
+      padding: 0 15px;
+    }
+
+    .infos {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+
+      .date,
+      .edited {
+        font-size: 10px;
+        color: #a6a6a6;
+        transition: opacity 0.2s;
+      }
+    }
+
+    .btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  }
+
+  .btn {
+    position: relative;
+    float: right;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.darkMode {
+  box-shadow: none;
+  color: $dark-text;
+  background: $dark-background;
+  border: 1px solid rgba($dark-text, 0.2);
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  .icon {
+    color: $dark-text;
+
+    &:hover {
+      color: rgba($dark-text, 0.8);
+    }
+
+    &.pinned {
+      color: $yellow;
     }
   }
 }

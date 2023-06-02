@@ -1,20 +1,78 @@
 @import "../../styles/mixins.scss";
 
 .root {
+  z-index: 9;
   position: sticky;
-  height: auto;
-  width: 100vw;
+
+  display: flex;
+  justify-content: space-between;
+
   top: 0;
   left: 0;
-  z-index: 9;
-  background-color: $blue;
+  width: 100vw;
+  height: auto;
   padding: 16px 32px;
+  border-bottom: 1px solid $blue;
+
+  background: $blue;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  transition: background 0.2s, border-bottom 0.2s;
 
   .title {
     color: $white;
-    font-family: inherit;
-    font-weight: 500;
+
     font-size: 32px;
+    font-weight: 500;
+    font-family: inherit;
+
+    transition: color 0.2s;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+
+    color: $white;
+    background: transparent;
+    transition: background 0.2s, color 0.2s;
+
+    outline: none;
+    cursor: pointer;
+
+    .switch {
+      pointer-events: none;
+    }
+
+    .icon {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.darkMode {
+  border-bottom: 1px solid rgba($dark-text, 0.2);
+
+  background: $dark-background;
+
+  .title {
+    color: $dark-text;
+  }
+
+  .theme {
+    .btn {
+      color: $dark-text;
+    }
   }
 }
