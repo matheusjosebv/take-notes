@@ -1,11 +1,12 @@
 import { v4 as uuid } from "uuid";
 import classNames from "classnames";
 import css from "./CreateArea.module.scss";
-import ThemeContext from "../../hooks/ThemeContext";
+import ThemeContext from "../../hooks/Context";
 import React, { useContext, useRef, useState } from "react";
 
 import jokes from "../../data/jokes";
 import { IoIosAdd, IoIosWarning } from "react-icons/io";
+import { BiCopy } from "react-icons/bi";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 
 const CreateArea = ({ onAdd, className }) => {
@@ -40,6 +41,12 @@ const CreateArea = ({ onAdd, className }) => {
     const random = Math.floor(Math.random() * jokes.length);
     titleRef.current.value = jokes[random].title;
     textRef.current.value = jokes[random].text;
+  };
+
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(
+      `${titleRef.current.value} ${textRef.current.value}`
+    );
   };
 
   return (
@@ -81,6 +88,14 @@ const CreateArea = ({ onAdd, className }) => {
             onClick={handleRandomPrompt}
           >
             <GiPerspectiveDiceSixFacesRandom className={css.icon} size={32} />
+          </button>
+
+          <button
+            type="button"
+            className={css.copyBtn}
+            onClick={handleCopyPrompt}
+          >
+            <BiCopy className={css.icon} size={32} />
           </button>
         </form>
       </div>

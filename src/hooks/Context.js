@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-const ThemeContext = createContext();
+const Context = createContext();
 
-export default ThemeContext;
+export default Context;
 
-export function ThemeProvider({ children }) {
+export function Provider({ children }) {
   const [darkTheme, setDarkTheme] = useState();
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -22,8 +23,8 @@ export function ThemeProvider({ children }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ darkTheme, toggleTheme }}>
+    <Context.Provider value={{ darkTheme, toggleTheme, search, setSearch }}>
       {children}
-    </ThemeContext.Provider>
+    </Context.Provider>
   );
 }

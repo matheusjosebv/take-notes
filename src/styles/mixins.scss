@@ -12,7 +12,17 @@ $dark-text: #e8eaed;
 $dark-yellow: #e6ad00;
 $dark-background: #202124;
 
-$breakpoint-desktop: 552px;
+$light-pinned: #d7ecff;
+$dark-pinned: #413615;
+
+$breakpoint-tablet: 552px;
+$breakpoint-desktop: 900px;
+
+@mixin media-tablet {
+  @media (min-width: #{$breakpoint-tablet}) {
+    @content;
+  }
+}
 
 @mixin media-desktop {
   @media (min-width: #{$breakpoint-desktop}) {

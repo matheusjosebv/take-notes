@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useContext } from "react";
-import ThemeContext from "../../hooks/ThemeContext";
+import Context from "../../hooks/Context";
 import css from "./Footer.module.scss";
 
 export default function Footer() {
-  const { darkTheme } = useContext(ThemeContext);
+  const { darkTheme } = useContext(Context);
   const year = new Date().getFullYear();
 
   return (

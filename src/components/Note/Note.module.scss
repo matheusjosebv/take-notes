@@ -22,6 +22,12 @@
     box-shadow: none;
   }
 
+  &.isPinned {
+    background: $light-pinned;
+    border: 2px solid rgb($light-blue, 0.15);
+    transition: box-shadow 0.2s, background 0.2s, border 0.2s;
+  }
+
   .icon {
     opacity: 1;
     color: #138cf5;
@@ -76,7 +82,7 @@
 
     .content {
       width: 100%;
-      margin: 0 0 40px;
+      margin: 0 5px 40px 0;
 
       .title {
         font-size: 1em;
@@ -92,11 +98,43 @@
     }
 
     .sideBtns {
+      position: relative;
+
       display: flex;
-      margin-left: auto;
       align-items: flex-start;
-      min-height: 70px;
+
       gap: 10px;
+      min-height: 70px;
+      margin-left: auto;
+
+      .dropDown {
+        z-index: 9;
+        position: absolute;
+
+        display: flex;
+        text-align: start;
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 5px 0;
+
+        background: $white;
+        transform: translate(10%, -120%);
+        box-shadow: rgba(99, 99, 99, 0.4) 0px 2px 8px 0px;
+        transition: box-shadow 0.2s, background 0.2s;
+
+        .info {
+          width: 100%;
+          padding: 10px 10px 10px 20px;
+          font-size: 13px;
+          color: $dark-background;
+          transition: color 0.2s;
+
+          &:hover {
+            background: rgba($dark-text, 0.8);
+          }
+        }
+      }
     }
   }
 
@@ -156,6 +194,12 @@
     box-shadow: none;
   }
 
+  &.isPinned {
+    background: $dark-pinned;
+    border: 2px solid rgb($yellow, 0.15);
+    transition: box-shadow 0.2s, background 0.2s, border 0.2s;
+  }
+
   .icon {
     color: $dark-text;
 
@@ -165,6 +209,23 @@
 
     &.pinned {
       color: $yellow;
+    }
+  }
+
+  .container {
+    .sideBtns {
+      .dropDown {
+        background: $dark-background;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 16px 4px;
+
+        .info {
+          color: $dark-text;
+
+          &:hover {
+            background: rgba($dark-pinned, 0.7);
+          }
+        }
+      }
     }
   }
 }

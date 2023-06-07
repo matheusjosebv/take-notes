@@ -7,16 +7,17 @@
   align-items: center;
   justify-content: center;
 
-  bottom: 0;
   width: 100%;
   padding: 50px 20px;
   border-top: 1px solid #dddddd;
 
   color: #b2b0b0;
 
-  transition: border-top 0.2s;
+  transition: border-top 0.2s, background 0.2s;
 }
 
 .darkMode {
   border-top: 1px solid rgba($dark-text, 0.2);
+  background: $dark-background;
+  color: $dark-text;
 }
