@@ -24,6 +24,7 @@ export default function Note({
   handlePin,
   handleEdit,
   handleDelete,
+  handleRecovery,
   handleDuplicate,
 }) {
   const boxRef = useRef();
@@ -39,7 +40,6 @@ export default function Note({
       }
     };
     document.addEventListener("mousedown", outsideClick);
-    console.log(getInfoRef);
     return () => {
       document.removeEventListener("mousedown", outsideClick);
     };
@@ -103,13 +103,16 @@ export default function Note({
               </div>
             )}
           </button>
-          <button className={css.btn} onClick={handlePin}>
-            {pinned ? (
-              <BsPinAngleFill className={classNames(css.icon, css.pinned)} />
-            ) : (
-              <BsPinAngle className={css.icon} />
-            )}
-          </button>
+
+          {handlePin && (
+            <button className={css.btn} onClick={handlePin}>
+              {pinned ? (
+                <BsPinAngleFill className={classNames(css.icon, css.pinned)} />
+              ) : (
+                <BsPinAngle className={css.icon} />
+              )}
+            </button>
+          )}
         </div>
       </div>
 
@@ -128,12 +131,23 @@ export default function Note({
         </div>
 
         <div className={css.btns}>
-          <button className={css.btn} onClick={handleEdit}>
-            <BsFillPenFill className={css.icon} />
-          </button>
-          <button className={css.btn} onClick={handleDelete}>
-            <FaTrashAlt className={classNames(css.icon, css.delete)} />
-          </button>
+          {handleEdit && (
+            <button className={css.btn} onClick={handleEdit}>
+              <BsFillPenFill className={css.icon} />
+            </button>
+          )}
+
+          {handleDelete && (
+            <button className={css.btn} onClick={handleDelete}>
+              <FaTrashAlt className={classNames(css.icon, css.delete)} />
+            </button>
+          )}
+
+          {handleRecovery && (
+            <button className={css.btn} onClick={handleRecovery}>
+              <p className={css.recover}>Unarchive</p>
+            </button>
+          )}
         </div>
       </div>
     </div>

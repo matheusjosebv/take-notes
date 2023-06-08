@@ -2,7 +2,6 @@ import { v4 as uuid } from "uuid";
 import classNames from "classnames";
 import css from "./PageHome.module.scss";
 import Context from "../../hooks/Context";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import Note from "../../components/Note/Note";
@@ -11,10 +10,9 @@ import CreateArea from "../../components/CreateArea/CreateArea";
 import { MdDeleteSweep } from "react-icons/md";
 
 export default function App() {
-  const { darkTheme, search } = useContext(Context);
+  const { darkTheme, search, setDeletedNotes, notes, setNotes } =
+    useContext(Context);
 
-  const [storageNotes, setStorageNotes] = useLocalStorage("notes", []);
-  const [notes, setNotes] = useState(storageNotes);
   const [filteredNotes, setFilteredNotes] = useState([]);
 
   const addNote = useCallback(
@@ -24,18 +22,20 @@ export default function App() {
         newNotes.map((n) => ({ ...n, animate: n.key === inputNote.key }))
       );
     },
-    [notes]
+    [notes, setNotes]
   );
 
   const deleteNote = useCallback(
     (key) => {
+      const deletedNote = notes.find((n) => n.key === key);
       const newNotes = notes.filter((n) => n.key !== key);
       setNotes(newNotes);
+      setDeletedNotes((prevNotes) => [...prevNotes, deletedNote]);
     },
-    [notes]
+    [notes, setDeletedNotes, setNotes]
   );
 
-  const PinNote = useCallback(
+  const pinNote = useCallback(
     (key) => {
       const updatedNotes = notes.map((n) => {
         if (n.key === key) {
@@ -53,7 +53,7 @@ export default function App() {
         setNotes([...restNote, pinnedNote]);
       }
     },
-    [notes]
+    [notes, setNotes]
   );
 
   const editNote = useCallback(
@@ -82,7 +82,7 @@ export default function App() {
         }
       }
     },
-    [notes]
+    [notes, setNotes]
   );
 
   const duplicateNote = useCallback(
@@ -103,7 +103,7 @@ export default function App() {
       const newNotes = [...notes, duplicatedNote];
       setNotes(newNotes);
     },
-    [notes]
+    [notes, setNotes]
   );
 
   useEffect(() => {
@@ -115,10 +115,6 @@ export default function App() {
 
     setFilteredNotes(result);
   }, [notes, search]);
-
-  useEffect(() => {
-    setStorageNotes(notes.map((n) => ({ ...n, animate: false })));
-  }, [notes, setStorageNotes]);
 
   return (
     <main className={classNames(css.root, { [css.darkMode]: darkTheme })}>
@@ -141,7 +137,7 @@ export default function App() {
                     pinned={n.pinned}
                     animate={n.animate}
                     createdAt={n.createdAt}
-                    handlePin={() => PinNote(n.key)}
+                    handlePin={() => pinNote(n.key)}
                     handleEdit={() => editNote(n.key)}
                     handleDelete={() => deleteNote(n.key)}
                     handleDuplicate={() => duplicateNote(n.key)}
@@ -159,7 +155,7 @@ export default function App() {
                   pinned={n.pinned}
                   animate={n.animate}
                   createdAt={n.createdAt}
-                  handlePin={() => PinNote(n.key)}
+                  handlePin={() => pinNote(n.key)}
                   handleEdit={() => editNote(n.key)}
                   handleDelete={() => deleteNote(n.key)}
                   handleDuplicate={() => duplicateNote(n.key)}

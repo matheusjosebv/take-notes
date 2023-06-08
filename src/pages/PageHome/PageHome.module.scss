@@ -4,7 +4,6 @@
   position: relative;
   min-height: 100vh;
   transition: background 0.2s;
-
   .wrapper {
     position: relative;
 
@@ -36,7 +35,7 @@
     }
 
     .reset {
-      z-index: 9;
+      z-index: 2;
       position: fixed;
 
       right: 15px;

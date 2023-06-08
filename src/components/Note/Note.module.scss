@@ -181,6 +181,15 @@
     background: none;
     outline: none;
     cursor: pointer;
+
+    .recover {
+      color: $blue;
+      transition: color 0.2s;
+
+      &:hover {
+        color: $dark-blue;
+      }
+    }
   }
 }
 
@@ -225,6 +234,17 @@
             background: rgba($dark-pinned, 0.7);
           }
         }
+      }
+    }
+  }
+
+  .btn {
+    .recover {
+      color: $yellow;
+      transition: color 0.2s;
+
+      &:hover {
+        color: $dark-yellow;
       }
     }
   }

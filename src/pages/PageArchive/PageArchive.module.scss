@@ -1,4 +1,46 @@
 @import "../../styles/mixins.scss";
 
 .root {
+  min-height: 100vh;
+  transition: background 0.2s;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0 0;
+
+    .title {
+      color: $blue;
+    }
+  }
+
+  .notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding: 25px 0 150px 0;
+
+    .emptyNotes {
+      color: $gray;
+      padding: 200px 0 0;
+    }
+  }
+}
+
+.darkMode {
+  background: $dark-background;
+
+  .header {
+    .title {
+      color: $dark-yellow;
+    }
+  }
+
+  .notes {
+    .emptyNotes {
+      color: $dark-text;
+    }
+  }
 }
