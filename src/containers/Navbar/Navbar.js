@@ -7,6 +7,8 @@ import Switch from "react-switch";
 import useLayout from "../../hooks/useLayout";
 import { MdAutoDelete } from "react-icons/md";
 import { HiMenu } from "react-icons/hi";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import { CgClose } from "react-icons/cg";
@@ -32,13 +34,20 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <input
-        name="search"
-        value={search}
-        className={css.input}
-        placeholder="Search note"
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div className={css.middle}>
+        <input
+          name="search"
+          value={search}
+          className={css.input}
+          placeholder="Search note"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        {search && (
+          <button className={css.clearInput} onClick={() => setSearch("")}>
+            <CgClose className={css.icon} />
+          </button>
+        )}
+      </div>
 
       <div className={css.right}>
         <div className={css.mobileMenu}>
@@ -49,32 +58,56 @@ const Navbar = () => {
           )}
         </div>
 
-        <button className={classNames(css.archive, { [css.active]: isActive })}>
+        <>
           <Link
             to="/archive"
             style={{ textDecoration: "none", color: "unset" }}
           >
-            <MdAutoDelete className={css.icon} />
+            <button
+              id="archive-btn"
+              className={classNames(css.archive, { [css.active]: isActive })}
+            >
+              <MdAutoDelete className={css.icon} />
+            </button>
           </Link>
-        </button>
 
-        <button className={css.theme} onClick={toggleTheme}>
-          <Switch
-            checked={darkTheme || false}
-            handleDiameter={24}
-            className={css.switch}
-            onChange={toggleTheme}
-            checkedIcon
-            uncheckedIcon
-            onColor="#e8eaed"
-            offColor="#fff"
-            onHandleColor="#202124"
-            offHandleColor="#138cf5"
-            activeBoxShadow="undefined"
-            checkedHandleIcon={<MdOutlineDarkMode className={css.icon} />}
-            uncheckedHandleIcon={<MdOutlineLightMode className={css.icon} />}
+          <ReactTooltip
+            style={{ fontSize: "10px", padding: "4px 6px" }}
+            anchorSelect="#archive-btn"
+            place="top"
+            content="Archive"
+            noArrow
+            delayShow={100}
           />
-        </button>
+        </>
+
+        <>
+          <button id="theme-btn" className={css.theme} onClick={toggleTheme}>
+            <Switch
+              checked={darkTheme || false}
+              handleDiameter={24}
+              className={css.switch}
+              onChange={toggleTheme}
+              checkedIcon
+              uncheckedIcon
+              onColor="#e8eaed"
+              offColor="#fff"
+              onHandleColor="#202124"
+              offHandleColor="#138cf5"
+              activeBoxShadow="undefined"
+              checkedHandleIcon={<MdOutlineDarkMode className={css.icon} />}
+              uncheckedHandleIcon={<MdOutlineLightMode className={css.icon} />}
+            />
+          </button>
+          <ReactTooltip
+            noArrow
+            delayShow={90}
+            place="bottom"
+            content="Switch Theme"
+            anchorSelect="#theme-btn"
+            style={{ fontSize: "10px", padding: "4px 6px" }}
+          />
+        </>
       </div>
 
       <Sidebar open={sidebar} toggleMenu={handleSidebar} />

@@ -2,18 +2,15 @@
 
 .root {
   position: relative;
-
   font-size: 13px;
 
   .warning {
     display: flex;
-
+    padding: 0 5px 30px;
     color: $red;
-    padding: 25px 25px 0;
 
     .icon {
       display: flex;
-
       width: 15px;
       height: 15px;
       margin-right: 3px;
@@ -24,25 +21,23 @@
     position: relative;
 
     width: 100%;
-    height: 175px;
-    padding: 15px;
     border-radius: 7px;
+    padding: 15px 15px 30px;
     border: 1px solid $white;
     margin: 0px auto 30px auto;
-    box-shadow: 0 1px 5px rgb(138, 137, 137);
 
     background: $white;
+    box-shadow: 0 1px 5px rgb(138, 137, 137);
     transition: background 0.2s, border 0.2s, box-shadow 0.2s;
 
     @include media-desktop {
-      width: 480px;
+      width: 80%;
       height: auto;
     }
 
-    .input,
-    .textarea {
+    .input {
       width: 100%;
-      padding: 4px;
+      padding: 0px 35px 15px 20px;
 
       font-size: 1em;
       font-family: inherit;
@@ -54,83 +49,142 @@
       transition: background 0.2s, color 0.2s;
     }
 
-    .textarea {
-      // padding: 20px 0 0;
-    }
-
-    .addBtn,
-    .randomBtn,
-    .copyBtn {
+    .randomGeneratorBtn {
       position: absolute;
+      top: 10px;
+      right: 10px;
 
-      border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      width: 25px;
+      height: 25px;
 
       border: none;
       outline: none;
       cursor: pointer;
+
+      color: $blue;
+      background: none;
+
+      transition: color 0.2s;
+
+      &:hover {
+        color: $dark-blue;
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .textEditor {
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      border-radius: 10px;
+      border: 1px solid $gray;
+
+      background: rgb($dark-text, 0.2);
+      transition: background 0.2s, color 0.2s, border 0.2s;
+
+      .editorBtns {
+        position: absolute;
+
+        top: 10px;
+        right: 10px;
+
+        gap: 5px;
+        display: flex;
+
+        @include media-tablet {
+          gap: 12px;
+        }
+
+        .btn {
+          width: 25px;
+          height: 25px;
+
+          border: none;
+          outline: none;
+          cursor: pointer;
+
+          color: $blue;
+          background: none;
+
+          transition: color 0.2s;
+
+          &:hover {
+            color: $dark-blue;
+          }
+
+          .icon {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+
+      .textarea {
+        width: 100%;
+        height: 200px;
+        min-height: 100px;
+        max-height: 250px;
+        padding: 40px 20px 0;
+
+        font-size: 1em;
+        font-family: inherit;
+
+        border: none;
+        outline: none;
+        resize: vertical;
+        border-radius: 10px;
+
+        background: rgb($dark-text, 0.2);
+
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        color: $gray;
+      }
+    }
+
+    .addBtn {
+      position: absolute;
+
+      bottom: 0;
+      right: 35px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      transform: translateY(50%);
+
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      color: $white;
+      background: $blue;
       transition: background 0.2s, color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        background: $dark-blue;
+      }
 
       .icon {
         display: flex;
+
+        width: 40px;
+        height: 40px;
 
         margin-top: 50%;
         margin-left: 50%;
         transform: translate(-50%, -50%);
       }
-    }
-  }
-
-  .addBtn {
-    bottom: 0;
-    right: 18px;
-    width: 36px;
-    height: 36px;
-    transform: translateY(50%);
-
-    color: $white;
-    background: $blue;
-
-    &:hover {
-      background: $dark-blue;
-    }
-  }
-
-  .randomBtn {
-    bottom: 0;
-    left: 18px;
-    width: 25px;
-    height: 25px;
-    transform: translateY(50%);
-
-    color: $white;
-    background: $yellow;
-
-    .icon {
-      padding: 6px;
-    }
-
-    &:hover {
-      background: $dark-yellow;
-    }
-  }
-
-  .copyBtn {
-    bottom: 0;
-    left: 52px;
-    width: 25px;
-    height: 25px;
-    transform: translateY(50%);
-
-    color: $white;
-    background: $yellow;
-
-    .icon {
-      padding: 8px;
-    }
-
-    &:hover {
-      background: $dark-yellow;
     }
   }
 }
@@ -142,13 +196,44 @@
     box-shadow: none;
     background: $dark-background;
 
-    .input,
-    .textarea {
+    .input {
       color: $dark-text;
       background: $dark-background;
 
       &::placeholder {
         color: rgba($dark-text, 0.7);
+      }
+    }
+
+    .randomGeneratorBtn {
+      color: $dark-text;
+
+      &:hover {
+        color: $gray;
+      }
+    }
+
+    .textEditor {
+      border: 1px solid rgba($dark-text, 0.2);
+      background: $dark-textarea;
+
+      .editorBtns {
+        .btn {
+          color: $dark-text;
+
+          &:hover {
+            color: $gray;
+          }
+        }
+      }
+
+      .textarea {
+        color: $dark-text;
+        background: $dark-textarea;
+
+        &::placeholder {
+          color: rgba($dark-text, 0.7);
+        }
       }
     }
 

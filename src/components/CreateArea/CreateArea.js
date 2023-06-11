@@ -2,17 +2,22 @@ import { v4 as uuid } from "uuid";
 import classNames from "classnames";
 import css from "./CreateArea.module.scss";
 import ThemeContext from "../../hooks/Context";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import React, { useContext, useRef, useState } from "react";
 
 import jokes from "../../data/jokes";
-import { IoIosAdd, IoIosWarning } from "react-icons/io";
+
 import { BiCopy } from "react-icons/bi";
+import { MdFormatBold } from "react-icons/md";
+import { IoIosAdd, IoIosWarning } from "react-icons/io";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import { AiOutlineItalic, AiOutlineUnderline } from "react-icons/ai";
 
 const CreateArea = ({ onAdd, className }) => {
   const formRef = useRef();
   const textRef = useRef();
   const titleRef = useRef();
+  const [isCopy, setIsCopy] = useState("copy");
   const [warning, setWarning] = useState(false);
   const { darkTheme } = useContext(ThemeContext);
 
@@ -44,9 +49,11 @@ const CreateArea = ({ onAdd, className }) => {
   };
 
   const handleCopyPrompt = () => {
-    navigator.clipboard.writeText(
-      `${titleRef.current.value} ${textRef.current.value}`
-    );
+    navigator.clipboard.writeText(` ${textRef.current.value}`);
+    setIsCopy("Copied!");
+    setInterval(() => {
+      setIsCopy("Copy");
+    }, 4010);
   };
 
   return (
@@ -62,14 +69,35 @@ const CreateArea = ({ onAdd, className }) => {
         )}
       </div>
 
-      <div className={css.formWrapper}>
-        <form ref={formRef} className={css.form} onSubmit={handleSubmit}>
-          <input
-            name="title"
-            ref={titleRef}
-            placeholder="Title"
-            className={css.input}
+      <form ref={formRef} className={css.form} onSubmit={handleSubmit}>
+        <input
+          name="title"
+          ref={titleRef}
+          placeholder="Title"
+          className={css.input}
+        />
+
+        <>
+          <button
+            id="random-btn"
+            type="button"
+            className={css.randomGeneratorBtn}
+            onClick={handleRandomPrompt}
+          >
+            <GiPerspectiveDiceSixFacesRandom className={css.icon} size={32} />
+          </button>
+          <ReactTooltip
+            style={{ fontSize: "10px", padding: "4px 6px" }}
+            anchorSelect="#random-btn"
+            place="top"
+            content="Random text"
+            noArrow
+            delayShow={100}
+            // delayHide={2000}
           />
+        </>
+
+        <div className={css.textEditor}>
           <textarea
             rows="3"
             name="text"
@@ -78,27 +106,59 @@ const CreateArea = ({ onAdd, className }) => {
             placeholder="Take a note..."
           />
 
-          <button className={css.addBtn} type="submit">
-            <IoIosAdd className={css.icon} size={32} />
-          </button>
+          <div className={css.editorBtns}>
+            {/* 
+            <button
+              type="button"
+              className={css.btn}
+              onClick={handleCopyPrompt}
+            >
+              <AiOutlineUnderline className={css.icon} size={32} />
+            </button>
 
-          <button
-            type="button"
-            className={css.randomBtn}
-            onClick={handleRandomPrompt}
-          >
-            <GiPerspectiveDiceSixFacesRandom className={css.icon} size={32} />
-          </button>
+            <button
+              type="button"
+              className={css.btn}
+              onClick={handleCopyPrompt}
+            >
+              <MdFormatBold className={css.icon} size={32} />
+            </button>
 
-          <button
-            type="button"
-            className={css.copyBtn}
-            onClick={handleCopyPrompt}
-          >
-            <BiCopy className={css.icon} size={32} />
-          </button>
-        </form>
-      </div>
+            <button
+              type="button"
+              className={css.btn}
+              onClick={handleCopyPrompt}
+            >
+              <AiOutlineItalic className={css.icon} size={32} />
+            </button>
+
+          */}
+            <>
+              <button
+                id="copy-btn"
+                type="button"
+                className={css.btn}
+                onClick={handleCopyPrompt}
+              >
+                <BiCopy className={css.icon} size={32} />
+              </button>
+              <ReactTooltip
+                style={{ fontSize: "10px", padding: "4px 6px" }}
+                anchorSelect="#copy-btn"
+                place="top"
+                content={isCopy}
+                noArrow
+                delayShow={100}
+                // delayHide={2000}
+              />
+            </>
+          </div>
+        </div>
+
+        <button className={css.addBtn} type="submit">
+          <IoIosAdd className={css.icon} size={20} />
+        </button>
+      </form>
     </main>
   );
 };

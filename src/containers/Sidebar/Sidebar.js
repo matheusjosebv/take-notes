@@ -1,12 +1,13 @@
+import { gsap } from "gsap";
+import Switch from "react-switch";
+import classNames from "classnames";
 import css from "./Sidebar.module.scss";
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import Context from "../../hooks/Context";
 import { useContext, useEffect, useRef } from "react";
-import classNames from "classnames";
-import Switch from "react-switch";
-import { Link } from "react-router-dom";
-import { gsap } from "gsap";
+
 import CustomRoute from "../../components/CustomRoute/CustomRoute";
+
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 const Sidebar = ({ open, toggleMenu }) => {
   const { darkTheme, toggleTheme } = useContext(Context);

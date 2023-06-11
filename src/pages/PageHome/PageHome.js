@@ -1,19 +1,22 @@
+import Fuse from "fuse.js";
 import { v4 as uuid } from "uuid";
 import classNames from "classnames";
 import css from "./PageHome.module.scss";
 import Context from "../../hooks/Context";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import Note from "../../components/Note/Note";
 import CreateArea from "../../components/CreateArea/CreateArea";
 
 import { MdDeleteSweep } from "react-icons/md";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 export default function App() {
   const { darkTheme, search, setDeletedNotes, notes, setNotes } =
     useContext(Context);
 
-  const [filteredNotes, setFilteredNotes] = useState([]);
+  const [results, setResults] = useState();
 
   const addNote = useCallback(
     (inputNote) => {
@@ -106,14 +109,23 @@ export default function App() {
     [notes, setNotes]
   );
 
-  useEffect(() => {
-    const result = notes.filter(
-      (n) =>
-        n.text.toLowerCase().includes(search) ||
-        n.title.toLowerCase().includes(search)
-    );
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
 
-    setFilteredNotes(result);
+    const items = Array.from(notes);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setNotes(items);
+  };
+
+  useEffect(() => {
+    const fuse = new Fuse(notes, {
+      keys: ["title", "text"],
+    });
+
+    setResults(fuse.search(search));
+    return () => {};
   }, [notes, search]);
 
   return (
@@ -122,60 +134,94 @@ export default function App() {
         <CreateArea onAdd={addNote} className={css.createArea} />
 
         <div className={css.container}>
-          <div className={css.notes}>
-            {search ? (
-              !filteredNotes.length ? (
+          {search ? (
+            <div className={css.notes}>
+              {!results.length ? (
                 <p className={css.noResults}>No matching results.</p>
               ) : (
-                filteredNotes.map((n) => (
+                results.map((n) => (
                   <Note
-                    id={n.key}
-                    key={n.key}
-                    text={n.text}
-                    title={n.title}
-                    edited={n.edited}
-                    pinned={n.pinned}
-                    animate={n.animate}
-                    createdAt={n.createdAt}
-                    handlePin={() => pinNote(n.key)}
-                    handleEdit={() => editNote(n.key)}
-                    handleDelete={() => deleteNote(n.key)}
-                    handleDuplicate={() => duplicateNote(n.key)}
+                    id={n.item.key}
+                    key={n.item.key}
+                    text={n.item.text}
+                    title={n.item.title}
+                    edited={n.item.edited}
+                    pinned={n.item.pinned}
+                    // image={"../../assets/images/img-2.png"}
+                    animate={n.item.animate}
+                    createdAt={n.item.createdAt}
+                    handlePin={() => pinNote(n.item.key)}
+                    handleEdit={() => editNote(n.item.key)}
+                    handleDelete={() => deleteNote(n.item.key)}
+                    handleDuplicate={() => duplicateNote(n.item.key)}
                   />
                 ))
-              )
-            ) : (
-              notes.map((n) => (
-                <Note
-                  id={n.key}
-                  key={n.key}
-                  text={n.text}
-                  title={n.title}
-                  edited={n.edited}
-                  pinned={n.pinned}
-                  animate={n.animate}
-                  createdAt={n.createdAt}
-                  handlePin={() => pinNote(n.key)}
-                  handleEdit={() => editNote(n.key)}
-                  handleDelete={() => deleteNote(n.key)}
-                  handleDuplicate={() => duplicateNote(n.key)}
-                />
-              ))
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId="notes">
+                {(provided) => (
+                  <div
+                    className={css.notes}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {notes.map((n, i) => {
+                      return (
+                        <Draggable key={n.key} draggableId={n.key} index={i}>
+                          {(provided) => (
+                            <Note
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              infoButton
+                              text={n.text}
+                              title={n.title}
+                              edited={n.edited}
+                              pinned={n.pinned}
+                              animate={n.animate}
+                              createdAt={n.createdAt}
+                              handlePin={() => pinNote(n.key)}
+                              handleEdit={() => editNote(n.key)}
+                              handleDelete={() => deleteNote(n.key)}
+                              handleDuplicate={() => duplicateNote(n.key)}
+                            />
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
         </div>
 
         {notes.length > 0 ? (
-          <button
-            className={css.reset}
-            onClick={() => {
-              if (window.confirm("Do you want to delete all notes?")) {
-                setNotes([]);
-              }
-            }}
-          >
-            <MdDeleteSweep className={css.icon} />
-          </button>
+          <>
+            <button
+              id="reset-btn"
+              className={css.reset}
+              onClick={() => {
+                if (window.confirm("Do you want to delete all notes?")) {
+                  setNotes([]);
+                }
+              }}
+            >
+              <MdDeleteSweep className={css.icon} />
+            </button>
+            <ReactTooltip
+              style={{ fontSize: "10px", padding: "4px 6px" }}
+              anchorSelect="#reset-btn"
+              place="top"
+              content="Delete all notes"
+              noArrow
+              delayShow={100}
+              // delayHide={2000}
+            />
+          </>
         ) : (
           <span className={css.emptyNotes}>You don't have any notes.</span>
         )}

@@ -1,6 +1,7 @@
 @import "../../styles/mixins.scss";
 
 .root {
+  position: relative;
   min-height: 100vh;
   transition: background 0.2s;
 
@@ -19,12 +20,60 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
     padding: 25px 0 150px 0;
 
     .emptyNotes {
       color: $gray;
       padding: 200px 0 0;
+    }
+  }
+
+  .deleteAllNotes {
+    z-index: 2;
+    position: fixed;
+
+    right: 15px;
+    width: 40px;
+    bottom: 15px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+
+    color: $white;
+    background: $blue;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+    outline: none;
+    cursor: pointer;
+    transition: all ease 0.2s;
+
+    @include media-desktop {
+      right: 20px;
+      width: 50px;
+      bottom: 20px;
+      height: 50px;
+    }
+
+    @include media-desktopLg {
+      right: 30px;
+      bottom: 30px;
+    }
+
+    .icon {
+      display: flex;
+      width: 20px;
+      height: 20px;
+      margin-left: 50%;
+      transform: translateX(-50%);
+
+      @include media-desktop {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    &:hover {
+      background: $red;
     }
   }
 }
@@ -40,6 +89,15 @@
 
   .notes {
     .emptyNotes {
+      color: $dark-text;
+    }
+  }
+
+  .deleteAllNotes {
+    background: $dark-text;
+    color: $dark-background;
+
+    &:hover {
       color: $dark-text;
     }
   }
