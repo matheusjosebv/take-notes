@@ -1,4 +1,9 @@
-const jokes = [
+interface jokesProps {
+  title: string;
+  text: string;
+}
+
+const jokes: jokesProps[] = [
   {
     title: "Relationship status?",
     text: "I'll leave the relations to the database.",
@@ -12,8 +17,7 @@ const jokes = [
     text: "They <code>return</code>ed <code>true</code>!",
   },
   {
-    title:
-      "Why did the security conscious engineer refuse to pay their dinner bill?",
+    title: "Why did the security conscious engineer refuse to pay their dinner bill?",
     text: "Because they could not verify the checksum.",
   },
   {
@@ -286,8 +290,7 @@ const jokes = [
     text: "Because they are all <code>span</code>",
   },
   {
-    title:
-      "What did the process say after working in an infinite loop all day?",
+    title: "What did the process say after working in an infinite loop all day?",
     text: "I need a break.",
   },
   {
@@ -347,8 +350,7 @@ const jokes = [
     text: "VW Bug",
   },
   {
-    title:
-      'What sits on a pirate\'s shoulder and calls, "Pieces of seven, Pieces of seven"?',
+    title: 'What sits on a pirate\'s shoulder and calls, "Pieces of seven, Pieces of seven"?',
     text: "Parroty error.",
   },
   {
@@ -360,13 +362,11 @@ const jokes = [
     text: "His friends were always boolean him.",
   },
   {
-    title:
-      "What PostgreSQL library should Python developers use for adult-oriented code?",
+    title: "What PostgreSQL library should Python developers use for adult-oriented code?",
     text: "psycoPG13",
   },
   {
-    title:
-      "What accommodations did the JavaScript developer request at the hotel?",
+    title: "What accommodations did the JavaScript developer request at the hotel?",
     text: "A room with a Vue.",
   },
   {
@@ -482,8 +482,7 @@ const jokes = [
     text: "There were a lot of KNIGHTS!",
   },
   {
-    title:
-      "What did the Network Administrator say when they caught a nasty virus?",
+    title: "What did the Network Administrator say when they caught a nasty virus?",
     text: "It hurts when IP",
   },
   {
@@ -495,8 +494,7 @@ const jokes = [
     text: "None, it is always 0xBAD",
   },
   {
-    title:
-      "Did you hear about the witch who was off by two when casting a hex?",
+    title: "Did you hear about the witch who was off by two when casting a hex?",
     text: "They failed to make the target DEAD and made them DEAF instead!",
   },
   {
@@ -504,8 +502,7 @@ const jokes = [
     text: "Because, they don't know how to join tables.",
   },
   {
-    title:
-      "What advice do you give to a JS developer who has never played baseball?",
+    title: "What advice do you give to a JS developer who has never played baseball?",
     text: "Try catch.",
   },
   {
@@ -562,8 +559,7 @@ const jokes = [
     text: "His room card said 404",
   },
   {
-    title:
-      "How do you tell an introverted computer scientist from an extroverted scientist?",
+    title: "How do you tell an introverted computer scientist from an extroverted scientist?",
     text: "An extroverted computer scientist looks at your shoes when he talks to you.",
   },
   {

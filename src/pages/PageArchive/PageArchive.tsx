@@ -9,41 +9,38 @@ import Note from "../../components/Note/Note";
 import { MdDeleteSweep } from "react-icons/md";
 
 export default function PageArchive() {
-  const { darkTheme, setNotes, deletedNotes, setDeletedNotes } =
-    useContext(Context);
+  const context = useContext(Context);
 
   const recoveryNote = useCallback(
     (key) => {
-      const noteToRecover = deletedNotes.find((d) => d.key === key);
-      const newDeletedNotes = deletedNotes.filter((d) => d.key !== key);
+      const noteToRecover = context?.deletedNotes.find((d) => d.key === key);
+      const newDeletedNotes = context?.deletedNotes.filter((d) => d.key !== key);
 
-      setDeletedNotes(newDeletedNotes);
-      setNotes((prev) => [...prev, noteToRecover]);
+      context?.setDeletedNotes(newDeletedNotes as []);
+      context?.setNotes((prevNotes) => [...prevNotes, noteToRecover!]);
     },
-    [deletedNotes, setDeletedNotes, setNotes]
+    [context]
   );
 
   const permanentDeleteNote = useCallback(
     (key) => {
-      const newDeletedNotes = deletedNotes.filter((d) => d.key !== key);
-      if (
-        window.confirm("Are you sure you want to delete permanently this note?")
-      ) {
-        setDeletedNotes(newDeletedNotes);
+      const newDeletedNotes = context?.deletedNotes.filter((d) => d.key !== key);
+      if (window.confirm("Are you sure you want to delete permanently this note?")) {
+        context?.setDeletedNotes(newDeletedNotes as []);
       }
     },
-    [deletedNotes, setDeletedNotes]
+    [context]
   );
 
   return (
-    <main className={classNames(css.root, { [css.darkMode]: darkTheme })}>
+    <main className={classNames(css.root, { [css.darkMode]: context?.darkTheme })}>
       <header className={css.header}>
         <h1 className={css.title}>Archive</h1>
       </header>
 
       <div className={css.notes}>
-        {deletedNotes.length !== 0 ? (
-          deletedNotes.map((n) => (
+        {context?.deletedNotes.length !== 0 ? (
+          context?.deletedNotes.map((n) => (
             <Note
               id={n.key}
               key={n.key}
@@ -55,6 +52,7 @@ export default function PageArchive() {
               createdAt={n.createdAt}
               handleRecovery={() => recoveryNote(n.key)}
               handlePermanentDelete={() => permanentDeleteNote(n.key)}
+              infoButton={false}
             />
           ))
         ) : (
@@ -62,16 +60,14 @@ export default function PageArchive() {
         )}
       </div>
 
-      {deletedNotes.length && (
+      {context?.deletedNotes.length && (
         <>
           <button
             id="reset-btn"
             className={css.deleteAllNotes}
             onClick={() => {
-              if (
-                window.confirm("Do you want to delete permanently all notes?")
-              ) {
-                setDeletedNotes([]);
+              if (window.confirm("Do you want to delete permanently all notes?")) {
+                context?.setDeletedNotes([]);
               }
             }}
           >

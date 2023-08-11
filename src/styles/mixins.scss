@@ -16,12 +16,13 @@ $dark-textarea: #212122;
 $light-pinned: #d7ecff;
 $dark-pinned: #413615;
 
+$sidebar-entry: cubic-bezier(0.3, 0, 0, 1);
+$sidebar-exit: cubic-bezier(0.85, 0, 0.85, 0.85);
+
 $breakpoint-tablet: 552px;
 $breakpoint-desktop: 900px;
 $breakpoint-desktopLg: 1200px;
 
-$sidebar-entry: cubic-bezier(0.3, 0, 0, 1);
-$sidebar-exit: cubic-bezier(0.85, 0, 0.85, 0.85);
 
 @mixin media-tablet {
   @media (min-width: #{$breakpoint-tablet}) {

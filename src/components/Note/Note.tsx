@@ -5,17 +5,13 @@ import Context from "../../hooks/Context";
 import { format, parseISO } from "date-fns";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import React, { useRef, useState, useEffect, useContext } from "react";
+import { NoteProps } from "../../types/types";
 
-import {
-  BsPinAngle,
-  BsFillPenFill,
-  BsPinAngleFill,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { BsPinAngle, BsFillPenFill, BsPinAngleFill, BsThreeDotsVertical } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdOutlineSettingsBackupRestore } from "react-icons/md";
 
-const Note = React.forwardRef(
+const Note = React.forwardRef<HTMLDivElement, NoteProps>(
   (
     {
       id,
@@ -26,8 +22,8 @@ const Note = React.forwardRef(
       pinned,
       animate,
       createdAt,
-      handlePin,
       infoButton,
+      handlePin,
       handleEdit,
       handleDelete,
       handleRecovery,
@@ -37,28 +33,28 @@ const Note = React.forwardRef(
     },
     ref
   ) => {
-    const boxRef = useRef();
-    const dropDownRef = useRef();
-    const moreBtnRef = useRef();
-    const { darkTheme } = useContext(Context);
+    const boxRef = useRef<HTMLDivElement>(null);
+    const dropDownRef = useRef<HTMLDivElement>(null);
+    const moreBtnRef = useRef<HTMLDivElement>(null);
+    const context = useContext(Context);
     const [showInfo, setShowInfo] = useState(false);
 
     useEffect(() => {
-      let outsideClick = (e) => {
-        if (e !== null || !dropDownRef.current.contains(e.target)) {
+      const outsideClick = (e: MouseEvent) => {
+        if (!dropDownRef.current?.contains(e.target as Node)) {
           setShowInfo(false);
-          console.log("clicked");
         }
       };
+
       document.addEventListener("mousedown", outsideClick);
       return () => {
         document.removeEventListener("mousedown", outsideClick);
       };
-    }, [showInfo]);
+    }, [dropDownRef]);
 
     useEffect(() => {
       const box = boxRef.current;
-      let tl;
+      let tl: gsap.core.Timeline;
       tl = gsap.timeline().set(box, { opacity: 1 });
       if (animate) tl.from(box, { ease: "expo", scaleY: 0, duration: 0.66 });
 
@@ -74,7 +70,7 @@ const Note = React.forwardRef(
           ref={boxRef}
           className={classNames(
             css.root,
-            { [css.darkMode]: darkTheme },
+            { [css.darkMode]: context?.darkTheme },
             { [css.isPinned]: pinned }
           )}
         >
@@ -85,16 +81,13 @@ const Note = React.forwardRef(
 
             <div className={css.content}>
               <h1 className={css.title}>{title}</h1>
-              <p
-                className={css.text}
-                dangerouslySetInnerHTML={{ __html: text }}
-              ></p>
+              <p className={css.text} dangerouslySetInnerHTML={{ __html: text }}></p>
             </div>
 
             <div className={css.sideBtns}>
               {infoButton && (
                 <div ref={moreBtnRef}>
-                  <button id="more-btn" className={css.btn}>
+                  <button id="more-btn" className={classNames(css.btn, "btn")}>
                     <BsThreeDotsVertical
                       className={css.icon}
                       onClick={() => setShowInfo((prev) => !prev)}
@@ -133,11 +126,9 @@ const Note = React.forwardRef(
 
               {handlePin && (
                 <>
-                  <button id="pin-btn" className={css.btn} onClick={handlePin}>
+                  <button id="pin-btn" className={classNames(css.btn, "btn")} onClick={handlePin}>
                     {pinned ? (
-                      <BsPinAngleFill
-                        className={classNames(css.icon, css.pinned)}
-                      />
+                      <BsPinAngleFill className={classNames(css.icon, css.pinned)} />
                     ) : (
                       <BsPinAngle className={css.icon} />
                     )}
@@ -160,12 +151,10 @@ const Note = React.forwardRef(
               <p className={css.edited}>{edited && "(edited)"}</p>
               <p className={css.date}>
                 {format(
-                  typeof createdAt === "string"
-                    ? parseISO(createdAt)
-                    : createdAt,
+                  typeof createdAt === "string" ? parseISO(createdAt) : createdAt,
                   "MMMM do, yyyy H:mma",
                   {
-                    awareOfUnicodeTokens: true,
+                    // awareOfUnicodeTokens: true,
                   }
                 )}
               </p>
@@ -175,7 +164,7 @@ const Note = React.forwardRef(
               {handleEdit && (
                 <>
                   <button
-                    className={classNames(css.btn, css.edit)}
+                    className={classNames(css.btn, css.edit, "btn")}
                     onClick={handleEdit}
                     id="edit-btn"
                   >
@@ -195,7 +184,7 @@ const Note = React.forwardRef(
               {handleDelete && (
                 <>
                   <button
-                    className={classNames(css.btn, css.delete)}
+                    className={classNames(css.btn, css.delete, "btn")}
                     onClick={handleDelete}
                     id="delete-btn"
                   >
@@ -215,7 +204,7 @@ const Note = React.forwardRef(
               {handleRecovery && (
                 <>
                   <button
-                    className={classNames(css.btn, css.recover)}
+                    className={classNames(css.btn, css.recover, "btn")}
                     onClick={handleRecovery}
                     id="recover-btn"
                   >
@@ -238,13 +227,11 @@ const Note = React.forwardRef(
               {handlePermanentDelete && (
                 <>
                   <button
-                    className={classNames(css.btn, css.permanentDelete)}
+                    className={classNames(css.btn, css.permanentDelete, "btn")}
                     onClick={handlePermanentDelete}
                     id="permanent-delete-btn"
                   >
-                    <FaTrashAlt
-                      className={classNames(css.icon, css.permanentDelete)}
-                    />
+                    <FaTrashAlt className={classNames(css.icon, css.permanentDelete)} />
                   </button>
                   <ReactTooltip
                     style={{ fontSize: "10px", padding: "4px 6px" }}

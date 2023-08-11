@@ -22,7 +22,7 @@
 
     width: 100%;
     border-radius: 7px;
-    padding: 15px 15px 30px;
+    padding: 15px 15px 40px;
     border: 1px solid $white;
     margin: 0px auto 30px auto;
 
@@ -53,26 +53,12 @@
       position: absolute;
       top: 10px;
       right: 10px;
-
       width: 25px;
       height: 25px;
-
-      border: none;
-      outline: none;
-      cursor: pointer;
-
       color: $blue;
-      background: none;
-
-      transition: color 0.2s;
 
       &:hover {
         color: $dark-blue;
-      }
-
-      .icon {
-        width: 24px;
-        height: 24px;
       }
     }
 
@@ -84,6 +70,7 @@
 
       border-radius: 10px;
       border: 1px solid $gray;
+      margin: 0 0 5px;
 
       background: rgb($dark-text, 0.2);
       transition: background 0.2s, color 0.2s, border 0.2s;
@@ -101,26 +88,14 @@
           gap: 12px;
         }
 
-        .btn {
-          width: 25px;
-          height: 25px;
-
-          border: none;
-          outline: none;
-          cursor: pointer;
+        .copyBtn {
+          width: 20px;
+          height: 20px;
 
           color: $blue;
-          background: none;
-
-          transition: color 0.2s;
 
           &:hover {
             color: $dark-blue;
-          }
-
-          .icon {
-            width: 18px;
-            height: 18px;
           }
         }
       }
@@ -152,38 +127,47 @@
       }
     }
 
-    .addBtn {
+    .bottomBtns {
       position: absolute;
-
+      left: 0;
       bottom: 0;
-      right: 35px;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      transform: translateY(50%);
+      width: 100%;
+      padding: 0 15px;
 
-      border: none;
-      outline: none;
-      cursor: pointer;
+      gap: 20px;
+      display: flex;
+      align-items: center;
 
-      color: $white;
-      background: $blue;
-      transition: background 0.2s, color 0.2s;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      .backgroundColor,
+      .imgAttachment,
+      .undo,
+      .redo {
+        width: 20px;
+        height: 20px;
+        color: $blue;
 
-      &:hover {
-        background: $dark-blue;
+        &:hover {
+          color: $dark-blue;
+        }
       }
 
-      .icon {
-        display: flex;
+      .redo {
+        margin-right: auto;
+      }
 
-        width: 40px;
-        height: 40px;
+      .addBtn {
+        width: 45px;
+        height: 45px;
+        transform: translateY(50%);
+        margin-left: auto;
 
-        margin-top: 50%;
-        margin-left: 50%;
-        transform: translate(-50%, -50%);
+        color: $white;
+        background: $blue;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+        &:hover {
+          background: $dark-blue;
+        }
       }
     }
   }
@@ -218,7 +202,7 @@
       background: $dark-textarea;
 
       .editorBtns {
-        .btn {
+        .copyBtn {
           color: $dark-text;
 
           &:hover {
@@ -237,12 +221,21 @@
       }
     }
 
-    .addBtn {
-      background: $dark-text;
-      color: $dark-background;
+    .bottomBtns {
+      .backgroundColor,
+      .imgAttachment,
+      .undo,
+      .redo {
+        color: $dark-text;
+      }
 
-      &:hover {
-        background: rgba($dark-text, 0.8);
+      .addBtn {
+        background: $dark-text;
+        color: $dark-background;
+
+        &:hover {
+          background: rgba($dark-text, 0.8);
+        }
       }
     }
   }

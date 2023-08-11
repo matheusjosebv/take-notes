@@ -1,4 +1,11 @@
-const notes = [
+interface notesProps {
+  key: number;
+  title: string;
+  animate: boolean;
+  content: string;
+}
+
+const notes: notesProps[] = [
   {
     key: 1,
     title: "Delegation",

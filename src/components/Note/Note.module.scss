@@ -6,6 +6,7 @@
   float: left;
 
   width: 100%;
+  min-width: 150px;
   padding: 20px;
   margin: 10px 0;
   border-radius: 7px;
@@ -14,8 +15,8 @@
   background: $white;
   border: 1px solid $white;
 
-  // opacity: 0;
-  // transform-origin: 0 0;
+  opacity: 0;
+  transform-origin: 0 0;
   transition: box-shadow 0.2s, background 0.2s, border 0.2s;
 
   @include media-tablet {
@@ -152,14 +153,9 @@
       .btn {
         position: relative;
         float: right;
-        border: none;
-        background: none;
-        outline: none;
-        cursor: pointer;
 
         .recover {
           color: $blue;
-          transition: color 0.2s;
 
           &:hover {
             color: $dark-blue;
@@ -229,22 +225,17 @@
     }
 
     .btns {
-      display: flex;
-      justify-content: flex-end;
       gap: 10px;
+      display: flex;
       align-items: flex-end;
+      justify-content: flex-end;
 
       .btn {
         position: relative;
         float: right;
-        border: none;
-        background: none;
-        outline: none;
-        cursor: pointer;
 
         .recover {
           color: $blue;
-          transition: color 0.2s;
 
           &:hover {
             color: $dark-blue;

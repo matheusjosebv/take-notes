@@ -15,8 +15,8 @@ import { CgClose } from "react-icons/cg";
 
 const Navbar = () => {
   const layout = useLayout();
-  const [sidebar, setSidebar] = useState(false);
-  const { darkTheme, toggleTheme, search, setSearch } = useContext(Context);
+  const [sidebar, setSidebar] = useState<boolean>(false);
+  const context = useContext(Context);
   const resolvedPath = useResolvedPath("/archive");
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
@@ -25,7 +25,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={classNames(css.root, { [css.darkMode]: darkTheme })}>
+    <nav className={classNames(css.root, { [css.darkMode]: context?.darkTheme })}>
       <div className={css.left}>
         <Link to="/" style={{ textDecoration: "none", color: "none" }}>
           <h1 className={css.title} onClick={() => setSidebar(false)}>
@@ -37,13 +37,14 @@ const Navbar = () => {
       <div className={css.middle}>
         <input
           name="search"
-          value={search}
+          value={context?.search}
           className={css.input}
           placeholder="Search note"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => context?.setSearch(e.target.value)}
+          disabled={sidebar}
         />
-        {search && (
-          <button className={css.clearInput} onClick={() => setSearch("")}>
+        {context?.search && (
+          <button className={css.clearInput} onClick={() => context?.setSearch("")}>
             <CgClose className={css.icon} />
           </button>
         )}
@@ -59,10 +60,7 @@ const Navbar = () => {
         </div>
 
         <>
-          <Link
-            to="/archive"
-            style={{ textDecoration: "none", color: "unset" }}
-          >
+          <Link to="/archive" style={{ textDecoration: "none", color: "unset" }}>
             <button
               id="archive-btn"
               className={classNames(css.archive, { [css.active]: isActive })}
@@ -82,12 +80,12 @@ const Navbar = () => {
         </>
 
         <>
-          <button id="theme-btn" className={css.theme} onClick={toggleTheme}>
+          <button id="theme-btn" className={css.theme} onClick={context?.toggleTheme}>
             <Switch
-              checked={darkTheme || false}
+              checked={context?.darkTheme || false}
               handleDiameter={24}
               className={css.switch}
-              onChange={toggleTheme}
+              onChange={() => context?.toggleTheme}
               checkedIcon
               uncheckedIcon
               onColor="#e8eaed"
@@ -110,7 +108,7 @@ const Navbar = () => {
         </>
       </div>
 
-      <Sidebar open={sidebar} toggleMenu={handleSidebar} />
+      <Sidebar isOpen={sidebar} toggleMenu={handleSidebar} />
     </nav>
   );
 };

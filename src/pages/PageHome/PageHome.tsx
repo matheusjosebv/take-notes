@@ -11,63 +11,61 @@ import CreateArea from "../../components/CreateArea/CreateArea";
 
 import { MdDeleteSweep } from "react-icons/md";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { NoteProps } from "../../types/types";
 
 export default function App() {
-  const { darkTheme, search, setDeletedNotes, notes, setNotes } =
-    useContext(Context);
-
-  const [results, setResults] = useState();
+  const context = useContext(Context);
+  const [results, setResults] = useState<any[]>();
+  console.log(results);
 
   const addNote = useCallback(
     (inputNote) => {
-      const newNotes = [...notes, inputNote];
-      setNotes(
-        newNotes.map((n) => ({ ...n, animate: n.key === inputNote.key }))
-      );
+      const newNotes = [...(context?.notes as []), inputNote];
+      context?.setNotes(newNotes.map((n) => ({ ...n, animate: n.key === inputNote.key })));
     },
-    [notes, setNotes]
+    [context]
   );
 
   const deleteNote = useCallback(
     (key) => {
-      const deletedNote = notes.find((n) => n.key === key);
-      const newNotes = notes.filter((n) => n.key !== key);
-      setNotes(newNotes);
-      setDeletedNotes((prevNotes) => [...prevNotes, deletedNote]);
+      const deletedNote = context!.notes.find((n) => n.key === key);
+      const newNotes = context!.notes.filter((n) => n.key !== key);
+      context?.setNotes(newNotes as []);
+      context?.setDeletedNotes((prevNotes) => [...prevNotes, deletedNote!]);
     },
-    [notes, setDeletedNotes, setNotes]
+    [context]
   );
 
   const pinNote = useCallback(
     (key) => {
-      const updatedNotes = notes.map((n) => {
+      const updatedNotes = context?.notes.map((n) => {
         if (n.key === key) {
           return { ...n, pinned: !n.pinned, animate: false };
         }
         return n;
       });
 
-      const pinnedNote = updatedNotes.find((n) => n.key === key);
-      const restNote = updatedNotes.filter((n) => n.key !== key);
+      const pinnedNote = updatedNotes?.find((n) => n.key === key);
+      const restNote = updatedNotes?.filter((n) => n.key !== key);
 
-      if (pinnedNote.pinned) {
-        setNotes([pinnedNote, ...restNote]);
-      } else {
-        setNotes([...restNote, pinnedNote]);
+      if (pinnedNote?.pinned) {
+        context?.setNotes([pinnedNote, ...(restNote as [])]);
+      } else if (pinnedNote && restNote) {
+        context?.setNotes([...restNote, pinnedNote]);
       }
     },
-    [notes, setNotes]
+    [context]
   );
 
   const editNote = useCallback(
     (key) => {
-      const noteIndex = notes.findIndex((n) => n.key === key);
+      const noteIndex = context?.notes.findIndex((n) => n.key === key);
       if (noteIndex !== -1) {
         const newTitle = prompt("Type the new Title");
         const newText = prompt("Type the new Text");
 
         if (newTitle || newText) {
-          const updatedNotes = notes.map((n) => {
+          const updatedNotes = context?.notes.map((n) => {
             if (n.key === key) {
               return {
                 ...n,
@@ -81,18 +79,18 @@ export default function App() {
             return n;
           });
 
-          setNotes(updatedNotes);
+          context?.setNotes(updatedNotes as []);
         }
       }
     },
-    [notes, setNotes]
+    [context]
   );
 
   const duplicateNote = useCallback(
     (key) => {
-      const note = notes.find((n) => n.key === key);
-      const newTitle = note.title;
-      const newText = note.text;
+      const note = context?.notes.find((n) => n.key === key);
+      const newTitle = note?.title;
+      const newText = note?.text;
 
       const duplicatedNote = {
         key: uuid(),
@@ -103,57 +101,60 @@ export default function App() {
         text: newText,
       };
 
-      const newNotes = [...notes, duplicatedNote];
-      setNotes(newNotes);
+      const newNotes = [...context!.notes, duplicatedNote];
+      context?.setNotes(newNotes as []);
     },
-    [notes, setNotes]
+    [context]
   );
 
-  const handleOnDragEnd = (result) => {
+  const handleOnDragEnd = (result: {
+    destination: { index: number };
+    source: { index: number };
+  }) => {
     if (!result.destination) return;
 
-    const items = Array.from(notes);
+    const items = Array.from(context!.notes);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setNotes(items);
+    context?.setNotes(items);
   };
 
   useEffect(() => {
-    const fuse = new Fuse(notes, {
+    const fuse = new Fuse(context!.notes, {
       keys: ["title", "text"],
     });
 
-    setResults(fuse.search(search));
+    setResults(fuse.search(context!.search));
     return () => {};
-  }, [notes, search]);
+  }, [context]);
 
   return (
-    <main className={classNames(css.root, { [css.darkMode]: darkTheme })}>
+    <main className={classNames(css.root, { [css.darkMode]: context?.darkTheme })}>
       <div className={css.wrapper}>
         <CreateArea onAdd={addNote} className={css.createArea} />
 
         <div className={css.container}>
-          {search ? (
+          {context?.search ? (
             <div className={css.notes}>
-              {!results.length ? (
+              {results?.length === 0 ? (
                 <p className={css.noResults}>No matching results.</p>
               ) : (
-                results.map((n) => (
+                results?.map((n) => (
                   <Note
-                    id={n.item.key}
                     key={n.item.key}
+                    id={n.item.key}
                     text={n.item.text}
                     title={n.item.title}
                     edited={n.item.edited}
                     pinned={n.item.pinned}
-                    // image={"../../assets/images/img-2.png"}
                     animate={n.item.animate}
                     createdAt={n.item.createdAt}
                     handlePin={() => pinNote(n.item.key)}
                     handleEdit={() => editNote(n.item.key)}
                     handleDelete={() => deleteNote(n.item.key)}
                     handleDuplicate={() => duplicateNote(n.item.key)}
+                    infoButton
                   />
                 ))
               )}
@@ -161,20 +162,34 @@ export default function App() {
           ) : (
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="notes">
-                {(provided) => (
-                  <div
-                    className={css.notes}
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {notes.map((n, i) => {
+                {(provided: {
+                  innerRef: React.LegacyRef<HTMLDivElement> | undefined;
+                  droppableProps: JSX.IntrinsicAttributes &
+                    React.ClassAttributes<HTMLDivElement> &
+                    React.HTMLAttributes<HTMLDivElement>;
+                  placeholder:
+                    | boolean
+                    | React.ReactChild
+                    | React.ReactFragment
+                    | React.ReactPortal
+                    | null
+                    | undefined;
+                }) => (
+                  <div className={css.notes} ref={provided.innerRef} {...provided.droppableProps}>
+                    {context?.notes.map((n: NoteProps, i) => {
                       return (
                         <Draggable key={n.key} draggableId={n.key} index={i}>
-                          {(provided) => (
+                          {(provided: {
+                            innerRef: any;
+                            draggableProps: JSX.IntrinsicAttributes;
+                            dragHandleProps: JSX.IntrinsicAttributes;
+                          }) => (
                             <Note
+                              id={n.id}
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
+                              key={n.id}
                               infoButton
                               text={n.text}
                               title={n.title}
@@ -199,14 +214,14 @@ export default function App() {
           )}
         </div>
 
-        {notes.length > 0 ? (
+        {context!.notes.length > 0 ? (
           <>
             <button
               id="reset-btn"
               className={css.reset}
               onClick={() => {
                 if (window.confirm("Do you want to delete all notes?")) {
-                  setNotes([]);
+                  context?.setNotes([]);
                 }
               }}
             >
@@ -219,7 +234,7 @@ export default function App() {
               content="Delete all notes"
               noArrow
               delayShow={100}
-              // delayHide={2000}
+              delayHide={2000}
             />
           </>
         ) : (
