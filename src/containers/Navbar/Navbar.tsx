@@ -70,7 +70,7 @@ const Navbar = () => {
           </Link>
 
           <ReactTooltip
-            style={{ fontSize: "10px", padding: "4px 6px" }}
+            style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
             anchorSelect="#archive-btn"
             place="top"
             content="Archive"
@@ -103,7 +103,7 @@ const Navbar = () => {
             place="bottom"
             content="Switch Theme"
             anchorSelect="#theme-btn"
-            style={{ fontSize: "10px", padding: "4px 6px" }}
+            style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
           />
         </>
       </div>

@@ -11,43 +11,43 @@
   left: 0;
   width: 100vw;
   height: auto;
-  padding: 15px 20px;
-  border-bottom: 1px solid $blue;
+  padding: 1.5rem 2rem;
+  border-bottom: 0.1rem solid $blue;
 
   background: $blue;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba($dark-text, 0.2);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.3);
+  border-bottom: 0.1rem solid rgba($dark-text, 0.2);
   transition: background 0.2s, border-bottom 0.2s;
 
   @include media-desktop {
-    padding: 16px 32px;
+    padding: 1.6rem 3.2rem;
   }
 
   @include media-desktopLg {
-    padding: 16px 50px;
+    padding: 1.6rem 5rem;
   }
 
   .left {
-    margin: 0 25px 0 0;
+    margin: 0 2.5rem 0 0;
     user-select: none;
 
     @include media-tablet {
-      margin: 0 50px 0 0;
+      margin: 0 5rem 0 0;
     }
 
     @include media-desktopLg {
-      margin: 0 100px 0 0;
+      margin: 0 10rem 0 0;
     }
 
     .title {
       color: $white;
-      font-size: 32px;
+      font-size: 3.2rem;
       font-weight: 500;
       font-family: inherit;
       transition: color 0.2s;
 
       @include media-desktop {
-        width: 180px;
+        width: 18rem;
       }
     }
   }
@@ -61,9 +61,9 @@
 
     .input {
       width: 100%;
-      height: 30px;
-      border-radius: 7px;
-      padding: 0 28px 0 10px;
+      height: 3rem;
+      border-radius: 0.7rem;
+      padding: 0 2.8rem 0 1rem;
 
       border: none;
       resize: none;
@@ -75,8 +75,8 @@
     .clearInput {
       position: absolute;
 
-      top: 0px;
-      right: 5px;
+      top: 0rem;
+      right: 0.5rem;
       height: 100%;
 
       display: flex;
@@ -93,8 +93,8 @@
       transition: color 0.2s;
 
       .icon {
-        width: 20px;
-        height: 20px;
+        width: 2rem;
+        height: 2rem;
       }
     }
   }
@@ -102,22 +102,22 @@
   .right {
     display: flex;
     align-items: center;
-    margin: 0 0 0 25px;
+    margin: 0 0 0 2.5rem;
 
     @include media-tablet {
-      gap: 30px;
-      margin: 0 0 0 50px;
+      gap: 3rem;
+      margin: 0 0 0 5rem;
     }
 
     @include media-desktopLg {
-      margin: 0 0 0 100px;
-      gap: 50px;
+      margin: 0 0 0 10rem;
+      gap: 5rem;
     }
 
     .mobileMenu {
       position: relative;
-      width: 26px;
-      height: 26px;
+      width: 2.6rem;
+      height: 2.6rem;
       display: flex;
       cursor: pointer;
 
@@ -144,8 +144,8 @@
       display: none;
       align-items: center;
 
-      width: 30px;
-      height: 30px;
+      width: 3rem;
+      height: 3rem;
       border-radius: 50%;
 
       color: $blue;
@@ -170,8 +170,8 @@
 
         top: 50%;
         left: 50%;
-        width: 16px;
-        height: 16px;
+        width: 1.6rem;
+        height: 1.6rem;
         transform: translate(-50%, -50%);
       }
     }
@@ -180,7 +180,7 @@
       display: none;
       align-items: center;
 
-      height: 40px;
+      height: 4rem;
       border-radius: 50%;
 
       color: $white;
@@ -204,8 +204,8 @@
 
         top: 50%;
         left: 50%;
-        width: 18px;
-        height: 18px;
+        width: 1.8rem;
+        height: 1.8rem;
         transform: translate(-50%, -50%);
       }
     }
@@ -225,7 +225,7 @@
     .input {
       color: $dark-text;
       background: $dark-background;
-      border: 1px solid rgba($dark-text, 0.2);
+      border: 0.1rem solid rgba($dark-text, 0.2);
     }
 
     .clearInput {

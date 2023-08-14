@@ -12,7 +12,7 @@
   transform-origin: 0 0;
   transform: translateX(111vw);
   transition: transform 0.8s $sidebar-exit;
-  margin: 70px 0 0;
+  margin: 7rem 0 0;
 
   @include media-tablet {
     display: none;
@@ -26,11 +26,11 @@
   .container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px 25px;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
 
     .route {
-      font-size: 14px;
+      font-size: 1.4rem;
       text-transform: uppercase;
 
       display: flex;
@@ -49,9 +49,9 @@
       display: flex;
       align-items: center;
 
-      font-size: 14px;
+      font-size: 1.4rem;
 
-      height: 40px;
+      height: 4rem;
       border-radius: 50%;
 
       color: $white;
@@ -71,8 +71,8 @@
 
         top: 50%;
         left: 50%;
-        width: 18px;
-        height: 18px;
+        width: 1.8rem;
+        height: 1.8rem;
         transform: translate(-50%, -50%);
       }
     }
@@ -81,7 +81,7 @@
 
 .darkMode {
   background: $dark-background;
-  border-left: rgba($dark-text, 0.2) 1px solid;
+  border-left: rgba($dark-text, 0.2) 0.1rem solid;
 
   .container {
     .route {

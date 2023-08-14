@@ -18,12 +18,28 @@ export interface NoteProps {
 }
 
 export interface ContextValue {
+  darkTheme: boolean;
+  toggleTheme: () => void;
   notes: NoteProps[];
   setNotes: React.Dispatch<React.SetStateAction<NoteProps[]>>;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  darkTheme: boolean;
-  toggleTheme: () => void;
   deletedNotes: NoteProps[];
   setDeletedNotes: React.Dispatch<React.SetStateAction<NoteProps[]>>;
+  pinnedNotes: NoteProps[];
+  setPinnedNotes: React.Dispatch<React.SetStateAction<NoteProps[]>>;
+}
+
+export interface providedProps {
+  innerRef: React.LegacyRef<HTMLDivElement> | undefined;
+  droppableProps: JSX.IntrinsicAttributes &
+    React.ClassAttributes<HTMLDivElement> &
+    React.HTMLAttributes<HTMLDivElement>;
+  placeholder:
+    | boolean
+    | React.ReactChild
+    | React.ReactFragment
+    | React.ReactPortal
+    | null
+    | undefined;
 }

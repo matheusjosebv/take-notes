@@ -7,9 +7,9 @@ function useLayout() {
 
   useEffect(() => {
     const update = () => {
-      setMobile(window.matchMedia("(max-width: 551px)").matches);
-      setTablet(window.matchMedia("(mix-width: 552px) and (max-width: 899px)").matches);
-      setDesktop(window.matchMedia("(min-width: 900px)").matches);
+      setMobile(window.matchMedia("(max-width: 55.1rem)").matches);
+      setTablet(window.matchMedia("(mix-width: 55.2rem) and (max-width: 89.9rem)").matches);
+      setDesktop(window.matchMedia("(min-width: 90.0rem)").matches);
     };
     update();
     window.addEventListener("resize", update);

@@ -4,19 +4,20 @@ import classNames from "classnames";
 import css from "./PageHome.module.scss";
 import Context from "../../hooks/Context";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import Note from "../../components/Note/Note";
 import CreateArea from "../../components/CreateArea/CreateArea";
 
 import { MdDeleteSweep } from "react-icons/md";
+import { NoteProps, providedProps } from "../../types/types";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { NoteProps } from "../../types/types";
 
 export default function App() {
   const context = useContext(Context);
-  const [results, setResults] = useState<any[]>();
-  console.log(results);
+  const [results, setResults] = useState<{ item: NoteProps; refIndex: number }[]>();
+  console.log(context?.notes, "NOTES");
+  console.log(context?.pinnedNotes, "PINNED-NOTES");
 
   const addNote = useCallback(
     (inputNote) => {
@@ -28,13 +29,37 @@ export default function App() {
 
   const deleteNote = useCallback(
     (key) => {
+      const unpinningNote = context?.pinnedNotes.map((n) => {
+        if (n.key === key) {
+          return { ...n, pinned: false };
+        }
+        return n;
+      });
+
       const deletedNote = context!.notes.find((n) => n.key === key);
-      const newNotes = context!.notes.filter((n) => n.key !== key);
-      context?.setNotes(newNotes as []);
-      context?.setDeletedNotes((prevNotes) => [...prevNotes, deletedNote!]);
+      const deletedPinnedNote = unpinningNote?.find((n) => n.key === key);
+
+      if (deletedPinnedNote) {
+        context?.setDeletedNotes((prevNotes) => [...prevNotes, deletedPinnedNote!]);
+        context?.setPinnedNotes(unpinningNote?.filter((n) => n.key !== key) as []);
+      }
+
+      if (deletedNote) {
+        context?.setDeletedNotes((prevNotes) => [...prevNotes, deletedNote!]);
+        context?.setNotes(context!.notes.filter((n) => n.key !== key) as []);
+      }
     },
     [context]
   );
+
+  const deleteAllNotes = () => {
+    if (window.confirm("Do you want to delete all notes?")) {
+      const unpinnedNotes = context?.pinnedNotes.map((n) => ({ ...n, pinned: false }));
+      context?.setNotes([]);
+      context?.setDeletedNotes((prev) => [...prev, ...context?.notes, ...unpinnedNotes!]);
+      context?.setPinnedNotes([]);
+    }
+  };
 
   const pinNote = useCallback(
     (key) => {
@@ -45,13 +70,24 @@ export default function App() {
         return n;
       });
 
-      const pinnedNote = updatedNotes?.find((n) => n.key === key);
-      const restNote = updatedNotes?.filter((n) => n.key !== key);
+      const updatedPinnedNotes = context?.pinnedNotes.map((n) => {
+        if (n.key === key) {
+          return { ...n, pinned: !n.pinned, animate: false };
+        }
+        return n;
+      });
 
-      if (pinnedNote?.pinned) {
-        context?.setNotes([pinnedNote, ...(restNote as [])]);
-      } else if (pinnedNote && restNote) {
-        context?.setNotes([...restNote, pinnedNote]);
+      const selectedNote = updatedNotes?.find((n) => n.key === key);
+      const selectedPinnedNote = updatedPinnedNotes?.find((n) => n.key === key);
+
+      if (selectedNote) {
+        context!.setPinnedNotes((prev) => [...prev, selectedNote]);
+        context!.setNotes([...(updatedNotes?.filter((n) => n.key !== key) as [])]);
+      }
+
+      if (selectedPinnedNote) {
+        context!.setNotes((prev) => [...prev, selectedPinnedNote!]);
+        context!.setPinnedNotes([...(updatedPinnedNotes?.filter((n) => n.key !== key) as [])]);
       }
     },
     [context]
@@ -79,7 +115,7 @@ export default function App() {
             return n;
           });
 
-          context?.setNotes(updatedNotes as []);
+          context?.setNotes(updatedNotes as NoteProps[]);
         }
       }
     },
@@ -88,26 +124,35 @@ export default function App() {
 
   const duplicateNote = useCallback(
     (key) => {
-      const note = context?.notes.find((n) => n.key === key);
-      const newTitle = note?.title;
-      const newText = note?.text;
+      const allNotes = [...context?.notes!, ...context?.pinnedNotes!];
+
+      const note = allNotes.find((n) => n.key === key);
+      const newTitle = note!.title;
+      const newText = note!.text;
+      const pinned = note!.pinned;
 
       const duplicatedNote = {
+        ...note,
         key: uuid(),
-        pinned: false,
+        pinned: pinned,
         edited: false,
         createdAt: new Date(),
         title: newTitle,
         text: newText,
       };
 
-      const newNotes = [...context!.notes, duplicatedNote];
-      context?.setNotes(newNotes as []);
+      if (duplicatedNote.pinned === true) {
+        context?.setPinnedNotes((prev) => [...prev, duplicatedNote] as NoteProps[]);
+      }
+
+      if (duplicatedNote.pinned === false) {
+        context?.setNotes((prev) => [...prev, duplicatedNote] as NoteProps[]);
+      }
     },
     [context]
   );
 
-  const handleOnDragEnd = (result: {
+  const handleOnDragEndNotes = (result: {
     destination: { index: number };
     source: { index: number };
   }) => {
@@ -120,8 +165,22 @@ export default function App() {
     context?.setNotes(items);
   };
 
+  const handleOnDragEndPinnedNotes = (result: {
+    destination: { index: number };
+    source: { index: number };
+  }) => {
+    if (!result.destination) return;
+
+    const items = Array.from(context!.pinnedNotes);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    context?.setPinnedNotes(items);
+  };
+
   useEffect(() => {
-    const fuse = new Fuse(context!.notes, {
+    const allNotes = [...context?.notes!, ...context?.pinnedNotes!];
+    const fuse = new Fuse(allNotes, {
       keys: ["title", "text"],
     });
 
@@ -135,6 +194,56 @@ export default function App() {
         <CreateArea onAdd={addNote} className={css.createArea} />
 
         <div className={css.container}>
+          {context?.pinnedNotes.length! > 0 && results?.length! === 0 && (
+            <DragDropContext onDragEnd={handleOnDragEndPinnedNotes}>
+              <Droppable droppableId="pinnedNotes">
+                {(provided: providedProps) => (
+                  <div
+                    className={css.pinnedNotes}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {context!.pinnedNotes.length > 0 && context!.notes.length > 0 && (
+                      <h4 className={css.header}>Pinned</h4>
+                    )}
+
+                    {context?.pinnedNotes.map((n: NoteProps, i) => {
+                      return (
+                        <Draggable key={n.key} draggableId={n.key} index={i}>
+                          {(provided: {
+                            innerRef: any;
+                            draggableProps: JSX.IntrinsicAttributes;
+                            dragHandleProps: JSX.IntrinsicAttributes;
+                          }) => (
+                            <Note
+                              id={n.id}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              key={n.id}
+                              infoButton
+                              text={n.text}
+                              title={n.title}
+                              edited={n.edited}
+                              pinned={n.pinned}
+                              animate={n.animate}
+                              createdAt={n.createdAt}
+                              handlePin={() => pinNote(n.key)}
+                              handleEdit={() => editNote(n.key)}
+                              handleDelete={() => deleteNote(n.key)}
+                              handleDuplicate={() => duplicateNote(n.key)}
+                            />
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
+
           {context?.search ? (
             <div className={css.notes}>
               {results?.length === 0 ? (
@@ -160,22 +269,14 @@ export default function App() {
               )}
             </div>
           ) : (
-            <DragDropContext onDragEnd={handleOnDragEnd}>
+            <DragDropContext onDragEnd={handleOnDragEndNotes}>
               <Droppable droppableId="notes">
-                {(provided: {
-                  innerRef: React.LegacyRef<HTMLDivElement> | undefined;
-                  droppableProps: JSX.IntrinsicAttributes &
-                    React.ClassAttributes<HTMLDivElement> &
-                    React.HTMLAttributes<HTMLDivElement>;
-                  placeholder:
-                    | boolean
-                    | React.ReactChild
-                    | React.ReactFragment
-                    | React.ReactPortal
-                    | null
-                    | undefined;
-                }) => (
+                {(provided: providedProps) => (
                   <div className={css.notes} ref={provided.innerRef} {...provided.droppableProps}>
+                    {context!.notes.length > 0 && context!.pinnedNotes.length > 0 && (
+                      <h4 className={css.header}>Others</h4>
+                    )}
+
                     {context?.notes.map((n: NoteProps, i) => {
                       return (
                         <Draggable key={n.key} draggableId={n.key} index={i}>
@@ -214,21 +315,13 @@ export default function App() {
           )}
         </div>
 
-        {context!.notes.length > 0 ? (
+        {context!.notes.length > 0 || context!.pinnedNotes.length > 0 ? (
           <>
-            <button
-              id="reset-btn"
-              className={css.reset}
-              onClick={() => {
-                if (window.confirm("Do you want to delete all notes?")) {
-                  context?.setNotes([]);
-                }
-              }}
-            >
+            <button id="reset-btn" className={css.reset} onClick={deleteAllNotes}>
               <MdDeleteSweep className={css.icon} />
             </button>
             <ReactTooltip
-              style={{ fontSize: "10px", padding: "4px 6px" }}
+              style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
               anchorSelect="#reset-btn"
               place="top"
               content="Delete all notes"

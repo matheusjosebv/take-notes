@@ -60,7 +60,7 @@ export default function PageArchive() {
         )}
       </div>
 
-      {context?.deletedNotes.length && (
+      {context?.deletedNotes.length! > 0 && (
         <>
           <button
             id="reset-btn"
@@ -74,7 +74,7 @@ export default function PageArchive() {
             <MdDeleteSweep className={css.icon} />
           </button>
           <ReactTooltip
-            style={{ fontSize: "10px", padding: "4px 6px" }}
+            style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
             anchorSelect="#reset-btn"
             place="top"
             content="Delete all archived notes"

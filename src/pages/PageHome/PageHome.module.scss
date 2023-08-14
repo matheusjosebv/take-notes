@@ -7,35 +7,66 @@
 
   .wrapper {
     position: relative;
-    padding: 0 16px;
+    padding: 0 1.6rem;
 
     .createArea {
-      padding: 30px 0 0;
+      padding: 3rem 0 0;
     }
 
     .emptyNotes {
       display: flex;
       justify-content: center;
       color: $gray;
+      font-size: 1.4rem;
+    }
+
+    .pinnedNotes {
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 5rem 0;
+
+      @include media-desktop {
+        padding: 0 7.5rem 5rem;
+      }
+
+      @include media-desktopLg {
+        padding: 0 15rem 5rem;
+      }
+
+      .header {
+        font-weight: 500;
+        color: $blue;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        margin: 0 0 1.5rem;
+      }
     }
 
     .notes {
       display: flex;
       flex-direction: column;
-      padding: 0 0 150px 0;
+      padding: 0 0 15rem 0;
 
       @include media-desktop {
-        padding: 0 75px 150px;
+        padding: 0 7.5rem 15rem;
       }
 
       @include media-desktopLg {
-        padding: 0 150px 150px;
+        padding: 0 15rem 15rem;
+      }
+
+      .header {
+        font-weight: 500;
+        color: $blue;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        margin: 0 0 1.5rem;
       }
 
       .noResults {
         color: $gray;
         transition: color 0.2s;
-        margin: 100px 0 0;
+        margin: 10rem 0 0;
       }
     }
 
@@ -43,44 +74,44 @@
       z-index: 2;
       position: fixed;
 
-      width: 40px;
-      height: 40px;
-      right: 15px;
-      bottom: 15px;
+      width: 4rem;
+      height: 4rem;
+      right: 1.5rem;
+      bottom: 1.5rem;
       border: none;
       border-radius: 50%;
 
       color: $white;
       background: $blue;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
 
       outline: none;
       cursor: pointer;
       transition: all ease 0.2s;
 
       @include media-desktop {
-        width: 50px;
-        height: 50px;
-        right: 20px;
-        bottom: 20px;
+        width: 5rem;
+        height: 5rem;
+        right: 2rem;
+        bottom: 2rem;
       }
 
       @include media-desktopLg {
-        right: 30px;
-        bottom: 30px;
+        right: 3rem;
+        bottom: 3rem;
       }
 
       .icon {
         display: flex;
 
-        width: 20px;
-        height: 20px;
+        width: 2rem;
+        height: 2rem;
         margin-left: 50%;
         transform: translateX(-50%);
 
         @include media-desktop {
-          width: 25px;
-          height: 25px;
+          width: 2.5rem;
+          height: 2.5rem;
         }
       }
 
@@ -95,7 +126,17 @@
   background: $dark-background;
 
   .wrapper {
+    .pinnedNotes {
+      .header {
+        color: $dark-yellow;
+      }
+    }
+
     .notes {
+      .header {
+        color: $dark-yellow;
+      }
+
       .noResults {
         color: $dark-text;
       }

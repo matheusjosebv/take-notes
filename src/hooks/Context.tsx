@@ -13,8 +13,11 @@ interface ProviderProps {
 
 export function Provider({ children }: ProviderProps) {
   const [storageNotes, setStorageNotes] = useLocalStorage("notes", []);
+  const [storagePinnedNotes, setStoragePinnedNotes] = useLocalStorage("pinnedNotes", []);
   const [storageDeletedNotes, setStorageDeletedNotes] = useLocalStorage("deletedNotes", []);
+
   const [notes, setNotes] = useState<NoteProps[]>(storageNotes);
+  const [pinnedNotes, setPinnedNotes] = useState<NoteProps[]>(storagePinnedNotes);
   const [deletedNotes, setDeletedNotes] = useState<NoteProps[]>(storageDeletedNotes);
 
   const [search, setSearch] = useState<string>("");
@@ -22,8 +25,16 @@ export function Provider({ children }: ProviderProps) {
 
   useEffect(() => {
     setStorageNotes(notes.map((n) => ({ ...n, animate: false })));
+    setStoragePinnedNotes(pinnedNotes.map((n) => ({ ...n, animate: false })));
     setStorageDeletedNotes(deletedNotes.map((n) => ({ ...n, animate: false })));
-  }, [deletedNotes, notes, setStorageDeletedNotes, setStorageNotes]);
+  }, [
+    deletedNotes,
+    notes,
+    pinnedNotes,
+    setStorageDeletedNotes,
+    setStorageNotes,
+    setStoragePinnedNotes,
+  ]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -46,6 +57,8 @@ export function Provider({ children }: ProviderProps) {
     setSearch,
     darkTheme,
     toggleTheme,
+    pinnedNotes,
+    setPinnedNotes,
     deletedNotes,
     setDeletedNotes,
   };

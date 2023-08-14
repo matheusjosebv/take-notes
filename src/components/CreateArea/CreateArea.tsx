@@ -7,8 +7,7 @@ import React, { useContext, useRef, useState } from "react";
 
 import jokes from "../../data/jokes";
 
-import { BiCopy, BiImageAlt } from "react-icons/bi";
-import { MdOutlinePalette } from "react-icons/md";
+import { BiCopy } from "react-icons/bi";
 import { IoIosAdd, IoIosWarning } from "react-icons/io";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 
@@ -83,7 +82,7 @@ const CreateArea = ({ onAdd, className }: Props) => {
             <GiPerspectiveDiceSixFacesRandom className="icon" size={32} />
           </button>
           <ReactTooltip
-            style={{ fontSize: "10px", padding: "4px 6px" }}
+            style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
             anchorSelect="#random-btn"
             place="top"
             content="Random text"
@@ -113,7 +112,7 @@ const CreateArea = ({ onAdd, className }: Props) => {
                 <BiCopy className={"icon"} size={32} />
               </button>
               <ReactTooltip
-                style={{ fontSize: "10px", padding: "4px 6px" }}
+                style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                 anchorSelect="#copy-btn"
                 place="top"
                 content={isCopy}
@@ -134,7 +133,7 @@ const CreateArea = ({ onAdd, className }: Props) => {
               <MdOutlinePalette className={"icon"} size={32} />
             </button>
             <ReactTooltip
-              style={{ fontSize: "10px", padding: "4px 6px" }}
+              style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
               anchorSelect="#background-btn"
               place="top"
               content="Background colors"
@@ -153,7 +152,7 @@ const CreateArea = ({ onAdd, className }: Props) => {
               <BiImageAlt className={"icon"} size={32} />
             </button>
             <ReactTooltip
-              style={{ fontSize: "10px", padding: "4px 6px" }}
+              style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
               anchorSelect="#img-btn"
               place="top"
               content="Image attachment"

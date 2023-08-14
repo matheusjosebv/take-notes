@@ -6,14 +6,14 @@
   float: left;
 
   width: 100%;
-  min-width: 150px;
-  padding: 20px;
-  margin: 10px 0;
-  border-radius: 7px;
+  min-width: 15rem;
+  padding: 2rem;
+  margin: 1rem 0;
+  border-radius: 0.7rem;
 
-  box-shadow: 0 2px 5px #a6a6a6;
+  box-shadow: 0 0.2rem 0.5rem #a6a6a6;
   background: $white;
-  border: 1px solid $white;
+  border: 0.1rem solid $white;
 
   opacity: 0;
   transform-origin: 0 0;
@@ -25,7 +25,7 @@
 
   &.isPinned {
     background: $light-pinned;
-    border: 2px solid rgb($light-blue, 0.15);
+    border: 0.2rem solid rgb($light-blue, 0.15);
     transition: box-shadow 0.2s, background 0.2s, border 0.2s;
   }
 
@@ -82,7 +82,7 @@
     }
 
     &:hover {
-      box-shadow: 0 2px 5px #a6a6a6;
+      box-shadow: 0 0.2rem 0.5rem #a6a6a6;
 
       .icon {
         opacity: 1;
@@ -114,27 +114,27 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100px;
-      height: 100px;
+      width: 10rem;
+      height: 10rem;
 
       .img {
-        width: 100px;
-        height: 100px;
+        width: 10rem;
+        height: 10rem;
       }
     }
 
     .content {
       width: 100%;
-      margin: 0 5px 40px 0;
+      margin: 0 0.5rem 4rem 0;
 
       .title {
-        font-size: 1em;
-        margin-bottom: 15px;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
       }
 
       .text {
-        font-size: 0.85em;
-        margin-bottom: 10px;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
         white-space: pre-wrap;
         word-wrap: break-word;
       }
@@ -146,8 +146,8 @@
       display: flex;
       align-items: flex-start;
 
-      gap: 10px;
-      min-height: 70px;
+      gap: 1rem;
+      min-height: 7rem;
       margin-left: auto;
 
       .btn {
@@ -177,13 +177,13 @@
 
         background: $white;
         transform: translate(-50%, -115%);
-        box-shadow: rgba(99, 99, 99, 0.4) 0px 2px 8px 0px;
+        box-shadow: rgba(99, 99, 99, 0.4) 0rem 0.2rem 0.8rem 0rem;
         transition: box-shadow 0.2s, background 0.2s;
 
         .info {
           width: 100%;
-          padding: 10px 10px 10px 20px;
-          font-size: 13px;
+          padding: 1rem 1rem 1rem 2rem;
+          font-size: 1.3rem;
           color: $dark-background;
           transition: color 0.2s;
 
@@ -200,32 +200,32 @@
 
     left: 0;
     width: 100%;
-    bottom: 20px;
-    padding: 0 20px;
+    bottom: 2rem;
+    padding: 0 2rem;
 
     display: flex;
     justify-content: space-between;
 
     @include media-desktop {
-      bottom: 15px;
-      padding: 0 15px;
+      bottom: 1.5rem;
+      padding: 0 1.5rem;
     }
 
     .infos {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 0.7rem;
 
       .date,
       .edited {
-        font-size: 10px;
+        font-size: 1rem;
         color: #a6a6a6;
         transition: opacity 0.2s;
       }
     }
 
     .btns {
-      gap: 10px;
+      gap: 1rem;
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
@@ -250,7 +250,7 @@
   box-shadow: none;
   color: $dark-text;
   background: $dark-background;
-  border: 1px solid rgba($dark-text, 0.2);
+  border: 0.1rem solid rgba($dark-text, 0.2);
 
   &:hover {
     box-shadow: none;
@@ -258,7 +258,7 @@
 
   &.isPinned {
     background: $dark-pinned;
-    border: 2px solid rgb($yellow, 0.15);
+    border: 0.2rem solid rgb($yellow, 0.15);
     transition: box-shadow 0.2s, background 0.2s, border 0.2s;
   }
 
@@ -278,7 +278,7 @@
     .sideBtns {
       .dropDown {
         background: $dark-background;
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 16px 4px;
+        box-shadow: rgba(0, 0, 0, 0.4) 0rem 0.4rem 1.6rem 0.4rem;
 
         .info {
           color: $dark-text;

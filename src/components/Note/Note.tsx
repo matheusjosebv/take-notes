@@ -114,7 +114,7 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                     )}
                   </button>
                   <ReactTooltip
-                    style={{ fontSize: "10px", padding: "4px 6px" }}
+                    style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                     anchorSelect="#more-btn"
                     place="top"
                     content="More"
@@ -134,7 +134,7 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                     )}
                   </button>
                   <ReactTooltip
-                    style={{ fontSize: "10px", padding: "4px 6px" }}
+                    style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                     anchorSelect="#pin-btn"
                     place="top"
                     content="Pin Note"
@@ -171,7 +171,7 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                     <BsFillPenFill className={css.icon} />
                   </button>
                   <ReactTooltip
-                    style={{ fontSize: "10px", padding: "4px 6px" }}
+                    style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                     anchorSelect="#edit-btn"
                     place="top"
                     content="Edit"
@@ -191,7 +191,7 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                     <FaTrashAlt className={classNames(css.icon, css.delete)} />
                   </button>
                   <ReactTooltip
-                    style={{ fontSize: "10px", padding: "4px 6px" }}
+                    style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                     anchorSelect="#delete-btn"
                     place="top"
                     content="Delete"
@@ -210,11 +210,11 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                   >
                     <MdOutlineSettingsBackupRestore
                       className={classNames(css.icon, css.recover)}
-                      // style={{ width: "16px", height: "16px" }}
+                      // style={{ width: "1.6rem", height: "1.6rem" }}
                     />
                   </button>
                   <ReactTooltip
-                    style={{ fontSize: "10px", padding: "4px 6px" }}
+                    style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                     anchorSelect="#recover-btn"
                     place="top"
                     content="Unarchive"
@@ -234,7 +234,7 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                     <FaTrashAlt className={classNames(css.icon, css.permanentDelete)} />
                   </button>
                   <ReactTooltip
-                    style={{ fontSize: "10px", padding: "4px 6px" }}
+                    style={{ fontSize: "1.0rem", padding: ".4rem .6rem" }}
                     anchorSelect="#permanent-delete-btn"
                     place="top"
                     content="Delete permanently"
