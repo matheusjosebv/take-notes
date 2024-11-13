@@ -94,7 +94,6 @@ const Note = React.forwardRef<HTMLDivElement, NoteProps>(
                     />
                     {showInfo && (
                       <div className={css.dropDown} ref={dropDownRef}>
-                        <p className={css.info}>Date</p>
                         <p className={css.info} onClick={handleDelete}>
                           Delete
                         </p>

@@ -8,8 +8,8 @@ export interface NoteProps {
   pinned: boolean;
   animate: boolean;
   createdAt: string;
-  handlePin?: React.MouseEventHandler;
   infoButton: boolean;
+  handlePin?: React.MouseEventHandler;
   handleEdit?: React.MouseEventHandler;
   handleDelete?: React.MouseEventHandler;
   handleRecovery?: React.MouseEventHandler;

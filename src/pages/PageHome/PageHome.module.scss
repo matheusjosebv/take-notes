@@ -16,7 +16,7 @@
     .emptyNotes {
       display: flex;
       justify-content: center;
-      color: $gray;
+      color: var(--gray);
       font-size: 1.4rem;
     }
 
@@ -35,7 +35,7 @@
 
       .header {
         font-weight: 500;
-        color: $blue;
+        color: var(--blue);
         font-size: 1.2rem;
         text-transform: uppercase;
         margin: 0 0 1.5rem;
@@ -57,14 +57,14 @@
 
       .header {
         font-weight: 500;
-        color: $blue;
+        color: var(--blue);
         font-size: 1.2rem;
         text-transform: uppercase;
         margin: 0 0 1.5rem;
       }
 
       .noResults {
-        color: $gray;
+        color: var(--gray);
         transition: color 0.2s;
         margin: 10rem 0 0;
       }
@@ -81,8 +81,8 @@
       border: none;
       border-radius: 50%;
 
-      color: $white;
-      background: $blue;
+      color: var(--white);
+      background: var(--blue);
       box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
 
       outline: none;
@@ -116,38 +116,38 @@
       }
 
       &:hover {
-        background: $red;
+        background: var(--red);
       }
     }
   }
 }
 
 .darkMode {
-  background: $dark-background;
+  background: var(--dark-background);
 
   .wrapper {
     .pinnedNotes {
       .header {
-        color: $dark-yellow;
+        color: var(--dark-yellow);
       }
     }
 
     .notes {
       .header {
-        color: $dark-yellow;
+        color: var(--dark-yellow);
       }
 
       .noResults {
-        color: $dark-text;
+        color: var(--dark-text);
       }
     }
 
     .reset {
-      background: $dark-text;
-      color: $dark-background;
+      background: var(--dark-text);
+      color: var(--dark-background);
 
       &:hover {
-        color: $dark-text;
+        color: var(--dark-text);
       }
     }
   }

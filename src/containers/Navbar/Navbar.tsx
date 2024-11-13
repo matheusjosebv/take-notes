@@ -1,7 +1,7 @@
 import css from "./Navbar.module.scss";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import Context from "../../hooks/Context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import classNames from "classnames";
 import Switch from "react-switch";
 import useLayout from "../../hooks/useLayout";
@@ -24,6 +24,12 @@ const Navbar = () => {
     setSidebar((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (!layout.mobile && !layout.tablet) {
+      setSidebar(false);
+    }
+  }, [layout.mobile, layout.tablet]);
+
   return (
     <nav className={classNames(css.root, { [css.darkMode]: context?.darkTheme })}>
       <div className={css.left}>
@@ -34,7 +40,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className={css.middle}>
+      <div className={classNames(css.middle, { [css.hideSearch]: sidebar })}>
         <input
           name="search"
           value={context?.search}

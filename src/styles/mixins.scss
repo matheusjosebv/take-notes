@@ -1,20 +1,28 @@
-$gray: #ccc;
-$white: #fff;
-$black: #000;
-$red: #f02849;
-$blue: #138cf5;
-$yellow: #fbbc04;
+:root {
+  --gray: #ccc;
+  --white: #fff;
+  --black: #000;
+  --red: #f02849;
+  --blue: #138cf5;
+  --yellow: #fbbc04;
+  --dark-gray: #555555;
 
-$light-blue: #2799fc;
+  --light-blue: #2799fc;
 
-$dark-blue: #0d7ddf;
-$dark-text: #e8eaed;
-$dark-yellow: #e6ad00;
-$dark-background: #202124;
-$dark-textarea: #212122;
+  --dark-blue: #0d7ddf;
+  --dark-text: #dfdfdf;
+  --dark-yellow: #e6ad00;
+  --dark-background: #202124;
+  --dark-textarea: #212122;
 
-$light-pinned: #d7ecff;
-$dark-pinned: #413615;
+  --light-pinned: #d7ecff;
+  --dark-pinned: #413615;
+
+  --fifteen: 0.15;
+  --15: 0.15;
+  --20: 0.2;
+  --40: 0.4;
+}
 
 $sidebar-entry: cubic-bezier(0.3, 0, 0, 1);
 $sidebar-exit: cubic-bezier(0.85, 0, 0.85, 0.85);

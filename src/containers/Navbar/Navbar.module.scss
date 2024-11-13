@@ -12,11 +12,9 @@
   width: 100vw;
   height: auto;
   padding: 1.5rem 2rem;
-  border-bottom: 0.1rem solid $blue;
 
-  background: $blue;
+  background: var(--blue);
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.3);
-  border-bottom: 0.1rem solid rgba($dark-text, 0.2);
   transition: background 0.2s, border-bottom 0.2s;
 
   @include media-desktop {
@@ -40,7 +38,7 @@
     }
 
     .title {
-      color: $white;
+      color: var(--white);
       font-size: 3.2rem;
       font-weight: 500;
       font-family: inherit;
@@ -52,12 +50,17 @@
     }
   }
 
+  .hideSearch {
+    opacity: 0;
+  }
+
   .middle {
     position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.2s opacity;
 
     .input {
       width: 100%;
@@ -86,7 +89,7 @@
       resize: none;
       outline: none;
 
-      color: $gray;
+      color: var(--gray);
       background: none;
 
       cursor: pointer;
@@ -133,7 +136,7 @@
         width: 100%;
         height: 100%;
 
-        color: $white;
+        color: var(--white);
         transform: translate(-50%, -50%);
       }
     }
@@ -148,8 +151,8 @@
       height: 3rem;
       border-radius: 50%;
 
-      color: $blue;
-      background: $white;
+      color: var(--blue);
+      background: var(--white);
       transition: background 0.2s, color 0.2s;
 
       border: none;
@@ -157,8 +160,8 @@
       cursor: pointer;
 
       &.active {
-        color: $white;
-        background: $yellow;
+        color: var(--white);
+        background: var(--yellow);
       }
 
       @include media-tablet {
@@ -183,7 +186,7 @@
       height: 4rem;
       border-radius: 50%;
 
-      color: $white;
+      color: var(--white);
       background: transparent;
       transition: background 0.2s, color 0.2s;
 
@@ -213,41 +216,41 @@
 }
 
 .darkMode {
-  background: $dark-background;
+  background: var(--dark-background);
 
   .left {
     .title {
-      color: $dark-text;
+      color: var(--dark-text);
     }
   }
 
   .middle {
     .input {
-      color: $dark-text;
-      background: $dark-background;
-      border: 0.1rem solid rgba($dark-text, 0.2);
+      color: var(--dark-text);
+      background: var(--dark-background);
+      border: 0.1rem solid var(--dark-gray);
     }
 
     .clearInput {
-      color: rgb($dark-text, 0.4);
+      color: rgba(var(--dark-text), var(--40));
     }
   }
 
   .right {
     .archive {
-      background: $dark-text;
-      color: $dark-background;
+      background: var(--dark-text);
+      color: var(--dark-background);
 
       &.active {
-        color: $dark-background;
-        background: $dark-yellow;
+        color: var(--dark-background);
+        background: var(--dark-yellow);
       }
     }
   }
 
   .theme {
     .btn {
-      color: $dark-text;
+      color: var(--dark-text);
     }
   }
 }

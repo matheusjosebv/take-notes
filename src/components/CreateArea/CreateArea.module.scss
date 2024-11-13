@@ -7,7 +7,7 @@
   .warning {
     display: flex;
     padding: 0 0.5rem 3rem;
-    color: $red;
+    color: var(--red);
 
     .icon {
       display: flex;
@@ -23,10 +23,10 @@
     width: 100%;
     border-radius: 0.7rem;
     padding: 1.5rem 1.5rem 4rem;
-    border: 0.1rem solid $white;
+    border: 0.1rem solid var(--white);
     margin: 0rem auto 3rem auto;
 
-    background: $white;
+    background: var(--white);
     box-shadow: 0 0.1rem 0.5rem rgb(138, 137, 137);
     transition: background 0.2s, border 0.2s, box-shadow 0.2s;
 
@@ -55,10 +55,10 @@
       right: 1rem;
       width: 2.5rem;
       height: 2.5rem;
-      color: $blue;
+      color: var(--blue);
 
       &:hover {
-        color: $dark-blue;
+        color: var(--dark-blue);
       }
     }
 
@@ -69,10 +69,10 @@
       height: 100%;
 
       border-radius: 1rem;
-      border: 0.1rem solid $gray;
+      border: 0.1rem solid var(--gray);
       margin: 0 0 0.5rem;
 
-      background: rgb($dark-text, 0.2);
+      background: rgb(var(--dark-text), var(--20));
       transition: background 0.2s, color 0.2s, border 0.2s;
 
       .editorBtns {
@@ -92,10 +92,10 @@
           width: 2rem;
           height: 2rem;
 
-          color: $blue;
+          color: var(--blue);
 
           &:hover {
-            color: $dark-blue;
+            color: var(--dark-blue);
           }
         }
       }
@@ -115,15 +115,13 @@
         resize: vertical;
         border-radius: 1rem;
 
-        background: rgb($dark-text, 0.2);
-
         transition: background 0.2s, color 0.2s;
       }
 
       .placeholder {
         position: absolute;
         top: 0;
-        color: $gray;
+        color: var(--gray);
       }
     }
 
@@ -144,10 +142,10 @@
       .redo {
         width: 2rem;
         height: 2rem;
-        color: $blue;
+        color: var(--blue);
 
         &:hover {
-          color: $dark-blue;
+          color: var(--dark-blue);
         }
       }
 
@@ -161,12 +159,12 @@
         transform: translateY(50%);
         margin-left: auto;
 
-        color: $white;
-        background: $blue;
+        color: var(--white);
+        background: var(--blue);
         box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
 
         &:hover {
-          background: $dark-blue;
+          background: var(--dark-blue);
         }
       }
     }
@@ -175,48 +173,48 @@
 
 .darkMode {
   .form {
-    border: 0.1rem solid rgba($dark-text, 0.2);
+    border: 0.1rem solid var(--dark-gray);
 
     box-shadow: none;
-    background: $dark-background;
+    background: var(--dark-background);
 
     .input {
-      color: $dark-text;
-      background: $dark-background;
+      color: var(--dark-text);
+      background: var(--dark-background);
 
       &::placeholder {
-        color: rgba($dark-text, 0.7);
+        color: rgba(var(--dark-text), 0.7);
       }
     }
 
     .randomGeneratorBtn {
-      color: $dark-text;
+      color: var(--dark-text);
 
       &:hover {
-        color: $gray;
+        color: var(--yellow);
       }
     }
 
     .textEditor {
-      border: 0.1rem solid rgba($dark-text, 0.2);
-      background: $dark-textarea;
+      border: 0.1rem solid var(--dark-gray);
+      background: var(--dark-text) area;
 
       .editorBtns {
         .copyBtn {
-          color: $dark-text;
+          color: var(--dark-text);
 
           &:hover {
-            color: $gray;
+            color: var(--yellow);
           }
         }
       }
 
       .textarea {
-        color: $dark-text;
-        background: $dark-textarea;
+        color: var(--dark-text);
+        background: var(--dark-text) area;
 
         &::placeholder {
-          color: rgba($dark-text, 0.7);
+          color: rgba(var(--dark-text), 0.7);
         }
       }
     }
@@ -226,15 +224,15 @@
       .imgAttachment,
       .undo,
       .redo {
-        color: $dark-text;
+        color: var(--dark-text);
       }
 
       .addBtn {
-        background: $dark-text;
-        color: $dark-background;
+        background: var(--dark-text);
+        color: var(--dark-background);
 
         &:hover {
-          background: rgba($dark-text, 0.8);
+          background: var(--yellow);
         }
       }
     }

@@ -8,15 +8,15 @@
   z-index: 2;
   width: 101vw;
   height: 100vh;
-  background: $blue;
+  background: var(--blue);
   transform-origin: 0 0;
   transform: translateX(111vw);
   transition: transform 0.8s $sidebar-exit;
   margin: 7rem 0 0;
 
-  @include media-tablet {
-    display: none;
-  }
+  // @include media-tablet {
+  //   display: none;
+  // }
 
   &.isOpen {
     transform: translateX(0vw);
@@ -36,7 +36,7 @@
       display: flex;
       align-items: center;
 
-      color: $white;
+      color: var(--white);
       background: transparent;
 
       border: none;
@@ -54,7 +54,7 @@
       height: 4rem;
       border-radius: 50%;
 
-      color: $white;
+      color: var(--white);
       background: transparent;
       transition: background 0.2s, color 0.2s;
 
@@ -80,12 +80,12 @@
 }
 
 .darkMode {
-  background: $dark-background;
-  border-left: rgba($dark-text, 0.2) 0.1rem solid;
+  background: var(--dark-background);
+  border-left: rgba(var(--dark-text), 0.2) 0.1rem solid;
 
   .container {
     .route {
-      color: $dark-text;
+      color: var(--dark-text);
     }
   }
 }
